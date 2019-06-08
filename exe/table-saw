@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+lib = File.expand_path('../lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'table_saw'
+require 'table_saw/build_dependency_graph'
+require 'table_saw/create_dump_file'
+require 'table_saw/manifest'
+require 'thor'
+
+class CLI < Thor
+  def self.exit_on_failure?
+    true
+  end
+
+  desc 'dump', 'Create a postgres dump file'
+  method_option :url, aliases: '-u', default: ENV['DATABASE_URL']
+  method_option :dbname, aliases: '-d', default: ENV['PGDATABASE']
+  method_option :host, aliases: '-h', default: ENV['PGHOST']
+  method_option :port, aliases: '-p', default: ENV['PGPORT']
+  method_option :user, aliases: '-U', default: ENV['PGUSER']
+  method_option :password, default: ENV['PGPASSWORD']
+  method_option :manifest, aliases: '-m', required: true
+  method_option :output, aliases: '-o', default: 'psql.dump'
+  def dump
+    TableSaw.configure(options.to_hash)
+    records = TableSaw::BuildDependencyGraph.new(TableSaw::Manifest.instance).call
+    TableSaw::CreateDumpFile.new(records, options[:output]).call
+  end
+end
+
+CLI.start

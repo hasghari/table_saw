@@ -1,0 +1,22 @@
+AllCops:
+  TargetRubyVersion: 2.6
+
+Metrics/LineLength:
+  Max: 120
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
+Style/FormatStringToken:
+  EnforcedStyle: template
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: ()
+    '%w': '()'
+    '%W': '()'
+    '%i': '()'
+    '%I': '()'

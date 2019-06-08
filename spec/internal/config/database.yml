@@ -1,0 +1,5 @@
+test:
+  adapter: postgresql
+  host: localhost
+  database: table_saw_test
+  username: postgres
