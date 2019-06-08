@@ -1,0 +1,4 @@
+tables:
+  - table: books
+    has_many:
+      - chapters

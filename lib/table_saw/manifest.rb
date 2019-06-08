@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'yaml'
-require 'table_saw/connection'
 
 module TableSaw
   class Manifest

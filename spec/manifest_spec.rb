@@ -39,4 +39,26 @@ RSpec.describe TableSaw::Manifest do
       end
     end
   end
+
+  describe '::instance' do
+    before do
+      TableSaw.configure(manifest: file)
+    end
+
+    context 'when manifest file does not exist' do
+      let(:file) { 'foobar.yml' }
+
+      it 'raises error' do
+        expect { described_class.instance }.to raise_error ArgumentError
+      end
+    end
+
+    context 'when manifest file does not exist' do
+      let(:file) { 'spec/fixtures/manifest.yml' }
+
+      it 'returns manifest instance' do
+        expect(described_class.instance).to be_a described_class
+      end
+    end
+  end
 end
