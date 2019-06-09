@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.org/hasghari/table_saw.svg?branch=master)](https://travis-ci.org/hasghari/table_saw)
+[![Maintainability](https://api.codeclimate.com/v1/badges/abd5b5451c764d3249f1/maintainability)](https://codeclimate.com/github/hasghari/table_saw/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/abd5b5451c764d3249f1/test_coverage)](https://codeclimate.com/github/hasghari/table_saw/test_coverage)
+
 # TableSaw
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/table_saw`. To experiment with that code, run `bin/console` for an interactive prompt.
