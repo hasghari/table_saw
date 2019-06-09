@@ -16,14 +16,15 @@ class CLI < Thor
   end
 
   desc 'dump', 'Create a postgres dump file'
-  method_option :url, aliases: '-u', default: ENV['DATABASE_URL']
+  method_option :url, aliases: '-u', default: ENV['DATABASE_URL'],
+                      desc: 'This option overrides all other connection properties.'
   method_option :dbname, aliases: '-d', default: ENV['PGDATABASE']
   method_option :host, aliases: '-h', default: ENV['PGHOST']
   method_option :port, aliases: '-p', default: ENV['PGPORT']
   method_option :user, aliases: '-U', default: ENV['PGUSER']
   method_option :password, default: ENV['PGPASSWORD']
   method_option :manifest, aliases: '-m', required: true
-  method_option :output, aliases: '-o', default: 'psql.dump'
+  method_option :output, aliases: '-o', default: 'output.dump'
   def dump
     TableSaw.configure(options.to_hash)
     records = TableSaw::BuildDependencyGraph.new(TableSaw::Manifest.instance).call
