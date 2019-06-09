@@ -9,7 +9,7 @@ RSpec.describe TableSaw do
     let(:configuration) { instance_spy TableSaw::Configuration }
 
     before do
-      allow(TableSaw).to receive(:configuration).and_return(configuration)
+      allow(described_class).to receive(:configuration).and_return(configuration)
     end
 
     it 'can accept a block' do

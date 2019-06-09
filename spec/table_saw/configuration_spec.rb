@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe TableSaw::Configuration do
-  subject(:config) { TableSaw::Configuration.new }
+  subject(:config) { described_class.new }
 
   describe '#url=' do
     before do
