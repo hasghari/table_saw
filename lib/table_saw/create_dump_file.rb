@@ -11,7 +11,7 @@ module TableSaw
       @file = file
     end
 
-    # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
     def call
       write_to_file <<~SQL
         BEGIN;
@@ -40,20 +40,20 @@ module TableSaw
         SQL
 
         TableSaw::Connection.with do |conn|
-          conn.copy_data "COPY (select * from #{name} where id in (#{ids.to_a.join(',')})) TO STDOUT" do
+          conn.copy_data "COPY (select * from #{name} where id in (#{ids.join(',')})) TO STDOUT" do
             while (row = conn.get_copy_data)
-              write_to_file(row)
+              write_to_file row
             end
           end
         end
 
-        write_to_file('\.')
-        write_to_file("\n")
+        write_to_file '\.'
+        write_to_file "\n"
       end
 
       write_to_file 'COMMIT;'
     end
-    # rubocop:enable Metrics/MethodLength,Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
 
     private
 

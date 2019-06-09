@@ -27,7 +27,7 @@ RSpec.describe TableSaw::BuildDependencyGraph do
     end
 
     it 'returns records for table' do
-      expect(graph.call['authors'].to_a).to eq ['1']
+      expect(graph.call).to eq('authors' => ['1'])
     end
   end
 
@@ -46,7 +46,7 @@ RSpec.describe TableSaw::BuildDependencyGraph do
     end
 
     it 'fetches foreign keys when not listed explicitly' do
-      expect(graph.call).to eq('authors' => Set.new(['1']), 'books' => Set.new(['1']))
+      expect(graph.call).to eq('authors' => ['1'], 'books' => ['1'])
     end
   end
 
@@ -67,7 +67,7 @@ RSpec.describe TableSaw::BuildDependencyGraph do
     end
 
     it 'fetches associated has_many' do
-      expect(graph.call).to eq('authors' => Set.new(['1']), 'books' => Set.new(['1']), 'chapters' => Set.new(%w(1 2)))
+      expect(graph.call).to eq('authors' => ['1'], 'books' => ['1'], 'chapters' => %w(1 2))
     end
   end
 end

@@ -7,9 +7,7 @@ module TableSaw
     class ForeignKeyRelationships
       QUERY = <<~SQL
         select
-          tc.constraint_name,
           tc.table_name as from_table,
-          tc.constraint_type,
           kcu.column_name as from_column,
           ccu.table_name as to_table,
           ccu.column_name as to_column
@@ -20,7 +18,7 @@ module TableSaw
       SQL
 
       def belongs_to
-        result.each_with_object(Hash.new { |h, k| h[k] = {} }) do |row, memo|
+        @belongs_to ||= result.each_with_object(Hash.new { |h, k| h[k] = {} }) do |row, memo|
           memo[row['from_table']][row['from_column']] = row['to_table']
         end
       end
