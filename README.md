@@ -4,7 +4,9 @@
 
 # TableSaw
 
-This gem creates a PSQL dump file from a Postgres database by only dumping a subset of data defined by a manifest file.
+This gem creates a PSQL dump file (data only) from a Postgres database by only dumping a subset of data defined by a 
+manifest file.
+
 It will automatically retrieve the foreign key dependencies of your tables as long as the foreign key constraints are
 defined.
 
