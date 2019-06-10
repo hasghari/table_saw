@@ -15,4 +15,6 @@ ActiveRecord::Schema.define(version: 0) do
     t.text :title
     t.text :content
   end
+
+  create_view :popular_authors, materialized: true
 end

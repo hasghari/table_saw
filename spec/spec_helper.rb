@@ -3,6 +3,8 @@
 require 'simplecov'
 SimpleCov.start
 
+require 'active_record'
+require 'scenic'
 require 'combustion'
 Combustion.initialize! :active_record
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'table_saw/queries/table_columns'
+require 'table_saw/queries/materialized_views'
 
 module TableSaw
   class CreateDumpFile
@@ -11,7 +12,7 @@ module TableSaw
       @file = file
     end
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     def call
       write_to_file <<~SQL
         BEGIN;
@@ -51,11 +52,19 @@ module TableSaw
         write_to_file "\n"
       end
 
+      refresh_materialized_views
+
       write_to_file 'COMMIT;'
     end
-    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/MethodLength,Metrics/AbcSize
 
     private
+
+    def refresh_materialized_views
+      TableSaw::Queries::MaterializedViews.new.call.each do |view|
+        write_to_file "REFRESH MATERIALIZED VIEW #{view};"
+      end
+    end
 
     def write_to_file(data)
       File.open(file, 'ab') { |f| f.puts(data) }
