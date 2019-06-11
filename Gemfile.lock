@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    table_saw (0.2.1)
+    table_saw (0.3.0)
       connection_pool
       pg
       thor
