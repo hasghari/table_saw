@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'table_saw/connection'
-
 module TableSaw
   module Queries
     class TableColumns

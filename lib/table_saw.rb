@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
-require 'table_saw/version'
 require 'table_saw/configuration'
+require 'table_saw/connection'
+require 'table_saw/dependency_graph'
+require 'table_saw/manifest'
+require 'table_saw/queries'
 
 module TableSaw
   def self.configuration

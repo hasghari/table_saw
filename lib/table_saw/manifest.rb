@@ -31,6 +31,10 @@ module TableSaw
         config.fetch('has_many', [])
       end
       # rubocop:enable Naming/PredicateName
+
+      def partial?
+        config.key?('query')
+      end
     end
 
     def self.instance
@@ -46,7 +50,7 @@ module TableSaw
     end
 
     def variables
-      config['variables']
+      config.fetch('variables', {})
     end
 
     def tables

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'table_saw/manifest'
-
 RSpec.describe TableSaw::Manifest do
   subject(:manifest) { described_class.new(config) }
 
@@ -15,6 +13,20 @@ RSpec.describe TableSaw::Manifest do
         { 'table' => 'books', 'query' => 'select * from books where author_id = %{author_id}' }
       ]
     }
+  end
+
+  describe '#partial?' do
+    context 'when query is provided' do
+      it 'returns true' do
+        expect(manifest.tables['books'].partial?).to be true
+      end
+    end
+
+    context 'when query is not provided' do
+      it 'returns false' do
+        expect(manifest.tables['authors'].partial?).to be false
+      end
+    end
   end
 
   describe '#variables' do

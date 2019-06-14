@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'table_saw/queries/foreign_key_relationships'
-
 RSpec.describe TableSaw::Queries::ForeignKeyRelationships do
   subject(:query) { described_class.new }
 

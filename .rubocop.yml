@@ -3,6 +3,9 @@ require: rubocop-rspec
 AllCops:
   TargetRubyVersion: 2.6
 
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+
 Metrics/LineLength:
   Max: 120
 

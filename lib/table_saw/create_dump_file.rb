@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'table_saw/queries/table_columns'
-require 'table_saw/queries/materialized_views'
-
 module TableSaw
   class CreateDumpFile
     attr_reader :records, :file
@@ -28,7 +25,7 @@ module TableSaw
         SET search_path = public, pg_catalog;
       SQL
 
-      records.each do |name, ids|
+      records.each do |name, table|
         write_to_file <<~COMMENT
           --
           -- Data for Name: #{name}; Type: TABLE DATA
@@ -41,7 +38,7 @@ module TableSaw
         SQL
 
         TableSaw::Connection.with do |conn|
-          conn.copy_data "COPY (select * from #{name} where id in (#{ids.join(',')})) TO STDOUT" do
+          conn.copy_data "COPY (#{table.copy_statement}) TO STDOUT" do
             while (row = conn.get_copy_data)
               write_to_file row
             end

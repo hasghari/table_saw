@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'table_saw/queries/table_columns'
-
 RSpec.describe TableSaw::Queries::TableColumns do
   subject(:query) { described_class.new(table) }
 

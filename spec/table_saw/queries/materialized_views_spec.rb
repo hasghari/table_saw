@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'table_saw/queries/materialized_views'
-
 RSpec.describe TableSaw::Queries::MaterializedViews do
   subject(:query) { described_class.new }
 

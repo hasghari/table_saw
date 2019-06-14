@@ -12,6 +12,8 @@ require 'bundler/setup'
 require 'database_cleaner'
 require 'table_saw'
 
+require 'pry'
+
 ActiveRecord::Base.connection_config.tap do |config|
   TableSaw.configure(host: config[:host], dbname: config[:database], user: config[:username])
 end
