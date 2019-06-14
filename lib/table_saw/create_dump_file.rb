@@ -50,6 +50,7 @@ module TableSaw
       end
 
       refresh_materialized_views
+      restart_sequences
 
       write_to_file 'COMMIT;'
     end
@@ -59,8 +60,20 @@ module TableSaw
 
     def refresh_materialized_views
       TableSaw::Queries::MaterializedViews.new.call.each do |view|
-        write_to_file "REFRESH MATERIALIZED VIEW #{view};"
+        write_to_file "refresh materialized view #{view};"
       end
+
+      write_to_file "\n"
+    end
+
+    def restart_sequences
+      records.each_key do |table|
+        write_to_file <<~SQL
+          select setval(pg_get_serial_sequence('#{table}', 'id'), (select max(id) from #{table}), true);
+        SQL
+      end
+
+      write_to_file "\n"
     end
 
     def write_to_file(data)
