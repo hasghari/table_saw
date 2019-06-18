@@ -16,5 +16,9 @@ ActiveRecord::Schema.define(version: 0) do
     t.text :content
   end
 
+  create_table :versions, id: false do |t|
+    t.string :version
+  end
+
   create_view :popular_authors, materialized: true
 end

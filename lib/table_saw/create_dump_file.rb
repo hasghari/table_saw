@@ -67,9 +67,9 @@ module TableSaw
     end
 
     def restart_sequences
-      records.each_key do |table|
+      TableSaw::Queries::SerialSequences.new.call.slice(*records.keys).each do |table, sequence|
         write_to_file <<~SQL
-          select setval(pg_get_serial_sequence('#{table}', 'id'), (select max(id) from #{table}), true);
+          select setval('#{sequence.name}', (select max(#{sequence.column}) from #{table}), true);
         SQL
       end
 
