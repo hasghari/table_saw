@@ -11,6 +11,8 @@ module TableSaw
 
     # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     def call
+      File.delete(file) if File.exist?(file)
+
       write_to_file <<~SQL
         BEGIN;
 

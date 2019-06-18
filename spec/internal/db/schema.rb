@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.text :content
   end
 
-  create_table :versions, id: false do |t|
+  create_table :schema_migrations, id: false do |t|
     t.string :version
   end
 
