@@ -73,8 +73,9 @@ variables:
 tables:
   - table: books
     query: "select * from books where author_id = %{author_id}"
-    has_many:
-      - chapters
+has_many:
+  books:
+    - chapters
 ```
 
 or
