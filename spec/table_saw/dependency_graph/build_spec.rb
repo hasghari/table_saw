@@ -128,8 +128,11 @@ RSpec.describe TableSaw::DependencyGraph::Build do
       let(:manifest) do
         TableSaw::Manifest.new(
           'tables' => [
-            { 'table' => 'books', 'has_many' => ['chapters'] }
-          ]
+            { 'table' => 'books' }
+          ],
+          'has_many' => {
+            'books' => 'chapters'
+          }
         )
       end
 
@@ -146,8 +149,11 @@ RSpec.describe TableSaw::DependencyGraph::Build do
       let(:manifest) do
         TableSaw::Manifest.new(
           'tables' => [
-            { 'table' => 'books', 'query' => 'select id from books where id = 1', 'has_many' => ['chapters'] }
-          ]
+            { 'table' => 'books', 'query' => 'select id from books where id = 1' }
+          ],
+          'has_many' => {
+            'books' => 'chapters'
+          }
         )
       end
 

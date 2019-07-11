@@ -24,12 +24,6 @@ module TableSaw
         format(config['query'], variables.transform_keys(&:to_sym))
       end
 
-      # rubocop:disable Naming/PredicateName
-      def has_many
-        config.fetch('has_many', [])
-      end
-      # rubocop:enable Naming/PredicateName
-
       def partial?
         config.key?('query')
       end
@@ -59,7 +53,7 @@ module TableSaw
 
     # rubocop:disable Naming/PredicateName
     def has_many_mapping
-      @has_many_mapping ||= tables.transform_values(&:has_many)
+      @has_many_mapping ||= config.fetch('has_many', {})
     end
     # rubocop:enable Naming/PredicateName
   end
