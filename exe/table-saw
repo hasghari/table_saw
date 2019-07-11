@@ -6,6 +6,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require 'table_saw'
 require 'table_saw/create_dump_file'
+require 'table_saw/version'
 require 'thor'
 
 class CLI < Thor
@@ -27,6 +28,11 @@ class CLI < Thor
     TableSaw.configure(options.to_hash)
     records = TableSaw::DependencyGraph::Build.new(TableSaw::Manifest.instance).call
     TableSaw::CreateDumpFile.new(records, options[:output]).call
+  end
+
+  desc 'version', 'Print version of table-saw'
+  def version
+    puts TableSaw::VERSION
   end
 end
 
