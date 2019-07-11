@@ -131,7 +131,7 @@ RSpec.describe TableSaw::DependencyGraph::Build do
             { 'table' => 'books' }
           ],
           'has_many' => {
-            'books' => 'chapters'
+            'books' => ['chapters']
           }
         )
       end
@@ -152,7 +152,7 @@ RSpec.describe TableSaw::DependencyGraph::Build do
             { 'table' => 'books', 'query' => 'select id from books where id = 1' }
           ],
           'has_many' => {
-            'books' => 'chapters'
+            'books' => ['chapters']
           }
         )
       end
