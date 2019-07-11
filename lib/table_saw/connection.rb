@@ -14,5 +14,11 @@ module TableSaw
     def self.pool
       @pool ||= ConnectionPool.new(size: 2) { PG::Connection.new(TableSaw.configuration.connection) }
     end
+
+    def self.exec(sql)
+      TableSaw::Connection.with do |conn|
+        conn.exec(sql)
+      end
+    end
   end
 end

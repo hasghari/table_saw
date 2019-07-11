@@ -3,10 +3,10 @@
 module TableSaw
   module Queries
     class MaterializedViews
+      QUERY = 'select matviewname from pg_matviews order by matviewname'
+
       def call
-        TableSaw::Connection.with do |conn|
-          conn.exec('select matviewname from pg_matviews order by matviewname').map { |row| row['matviewname'] }
-        end
+        TableSaw::Connection.exec(QUERY).map { |row| row['matviewname'] }
       end
     end
   end

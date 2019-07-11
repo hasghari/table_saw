@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   create_table :schema_migrations, id: false do |t|
-    t.string :version
+    t.string :version, primary_key: true
   end
 
   create_view :popular_authors, materialized: true

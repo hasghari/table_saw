@@ -32,19 +32,15 @@ module TableSaw
         if record
           dir.partial? ? record.fetch_associations(dir) : []
         else
-          TableSaw::DependencyGraph::DumpTable.new(context: context, name: dir.table_name, partial: dir.partial?)
+          TableSaw::DependencyGraph::DumpTable.new(manifest: manifest, name: dir.table_name, partial: dir.partial?)
             .tap { |table| records[dir.table_name] = table }.fetch_associations(dir)
         end
-      end
-
-      def context
-        @context ||= TableSaw::DependencyGraph::Context.new(manifest)
       end
 
       def select_ids(table)
         return [] unless table.partial?
 
-        context.perform_query(table.query).map { |row| row['id'] }
+        TableSaw::Connection.exec(table.query).map { |row| row[TableSaw.information_schema.primary_keys[table.name]] }
       end
     end
   end

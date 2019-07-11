@@ -46,8 +46,7 @@ RSpec.describe TableSaw::Manifest do
       end
 
       it 'returns correct query' do
-        expect(manifest.tables.values.map(&:query)).to eq(['select id from authors',
-                                                           'select * from books where author_id = 134'])
+        expect(manifest.tables.values.map(&:query)).to eq([nil, 'select * from books where author_id = 134'])
       end
     end
   end

@@ -21,6 +21,10 @@ module TableSaw
       def queryable?
         !partial || selectable?
       end
+
+      def primary_key
+        TableSaw.information_schema.primary_keys[table_name]
+      end
     end
   end
 end

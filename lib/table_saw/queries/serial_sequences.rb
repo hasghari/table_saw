@@ -18,10 +18,8 @@ module TableSaw
       SerialSequence = Struct.new(:name, :table, :column)
 
       def call
-        TableSaw::Connection.with do |conn|
-          conn.exec(QUERY).each_with_object({}) do |row, memo|
-            memo[row['table']] = SerialSequence.new(row['sequence'], row['table'], row['column'])
-          end
+        TableSaw::Connection.exec(QUERY).each_with_object({}) do |row, memo|
+          memo[row['table']] = SerialSequence.new(row['sequence'], row['table'], row['column'])
         end
       end
     end

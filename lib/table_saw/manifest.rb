@@ -19,11 +19,9 @@ module TableSaw
       alias name table
 
       def query
-        if config['query']
-          format(config['query'], variables.transform_keys(&:to_sym))
-        else
-          "select id from #{table}"
-        end
+        return unless partial?
+
+        format(config['query'], variables.transform_keys(&:to_sym))
       end
 
       # rubocop:disable Naming/PredicateName
@@ -58,5 +56,11 @@ module TableSaw
         memo[t.name] = t
       end
     end
+
+    # rubocop:disable Naming/PredicateName
+    def has_many_mapping
+      @has_many_mapping ||= tables.transform_values(&:has_many)
+    end
+    # rubocop:enable Naming/PredicateName
   end
 end

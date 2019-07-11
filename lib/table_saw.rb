@@ -3,6 +3,7 @@
 require 'table_saw/configuration'
 require 'table_saw/connection'
 require 'table_saw/dependency_graph'
+require 'table_saw/information_schema'
 require 'table_saw/manifest'
 require 'table_saw/queries'
 
@@ -19,5 +20,9 @@ module TableSaw
         configuration.public_send("#{key}=", value)
       end
     end
+  end
+
+  def self.information_schema
+    @information_schema ||= TableSaw::InformationSchema.new
   end
 end

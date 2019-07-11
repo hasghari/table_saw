@@ -3,10 +3,9 @@
 module TableSaw
   module DependencyGraph
     class BelongsToDirectives
-      attr_reader :context, :directive
+      attr_reader :directive
 
-      def initialize(context, directive)
-        @context = context
+      def initialize(directive)
         @directive = directive
       end
 
@@ -19,7 +18,7 @@ module TableSaw
       private
 
       def associations
-        context.belongs_to.fetch(directive.table_name, {})
+        TableSaw.information_schema.belongs_to.fetch(directive.table_name, {})
       end
 
       def ids
@@ -31,9 +30,10 @@ module TableSaw
       def query_result
         return [] unless directive.selectable?
 
-        context.perform_query(
-          format('select %{columns} from %{table_name} where id in (%{ids})',
-                 columns: associations.keys.join(','), table_name: directive.table_name, ids: directive.ids.join(','))
+        TableSaw::Connection.exec(
+          format('select %{columns} from %{table_name} where %{primary_key} in (%{ids})',
+                 primary_key: directive.primary_key, columns: associations.keys.join(','),
+                 table_name: directive.table_name, ids: directive.ids.join(','))
         )
       end
     end
