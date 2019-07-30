@@ -27,6 +27,10 @@ module TableSaw
       def partial?
         config.key?('query')
       end
+
+      def has_many
+        config.fetch('has_many', [])
+      end
     end
 
     def self.instance

@@ -12,7 +12,8 @@ module TableSaw
 
       def call
         manifest.tables.values.sort_by { |t| t.partial? ? 1 : 0 }.each do |table|
-          add TableSaw::DependencyGraph::AddDirective.new(table.name, ids: select_ids(table), partial: table.partial?)
+          add TableSaw::DependencyGraph::AddDirective.new(table.name, ids: select_ids(table), partial: table.partial?,
+                                                                      has_many: table.has_many)
         end
 
         records

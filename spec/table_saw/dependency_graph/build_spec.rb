@@ -161,5 +161,27 @@ RSpec.describe TableSaw::DependencyGraph::Build do
         expect(graph.call['chapters'].ids).to eq Set.new(%w(1 2))
       end
     end
+
+    context 'when scoped to partial' do
+      let(:manifest) do
+        TableSaw::Manifest.new(
+          'tables' => [
+            { 'table' => 'books', 'query' => 'select id from books where id = 1', 'has_many' => ['chapters'] }
+          ],
+          'has_many' => {
+            'authors' => ['books']
+          }
+        )
+      end
+
+      before do
+        Book.create!(id: 2, author_id: 1, name: 'Origin')
+        Chapter.create!(id: 3, book_id: 2)
+      end
+
+      it 'only fetches chapters in scope' do
+        expect(graph.call['chapters'].ids).to eq Set.new(%w(1 2))
+      end
+    end
   end
 end
