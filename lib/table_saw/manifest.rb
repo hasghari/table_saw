@@ -55,10 +55,8 @@ module TableSaw
       end
     end
 
-    # rubocop:disable Naming/PredicateName
-    def has_many_mapping
-      @has_many_mapping ||= config.fetch('has_many', {})
+    def has_many
+      @has_many ||= config.fetch('has_many', {})
     end
-    # rubocop:enable Naming/PredicateName
   end
 end

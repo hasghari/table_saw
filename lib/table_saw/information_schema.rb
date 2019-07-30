@@ -6,11 +6,9 @@ module TableSaw
       foreign_key_relationships.belongs_to
     end
 
-    # rubocop:disable Naming/PredicateName
     def has_many
       foreign_key_relationships.has_many
     end
-    # rubocop:enable Naming/PredicateName
 
     def primary_keys
       @primary_keys ||= TableSaw::Queries::PrimaryKeys.new.call

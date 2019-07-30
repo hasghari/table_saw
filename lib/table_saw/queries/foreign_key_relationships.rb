@@ -21,13 +21,11 @@ module TableSaw
         end
       end
 
-      # rubocop:disable Naming/PredicateName
       def has_many
         @has_many ||= result.each_with_object(Hash.new { |h, k| h[k] = [] }) do |row, memo|
           memo[row['to_table']].push([row['from_table'], row['from_column']])
         end
       end
-      # rubocop:enable Naming/PredicateName
 
       private
 

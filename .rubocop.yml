@@ -9,6 +9,10 @@ Layout/MultilineMethodCallIndentation:
 Metrics/LineLength:
   Max: 120
 
+Naming/PredicateName:
+  NameWhitelist:
+    - has_many
+
 Style/Documentation:
   Enabled: false
 
