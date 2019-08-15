@@ -23,7 +23,6 @@ Gem::Specification.new do |spec|
   spec.executables   = ['table-saw']
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'connection_pool'
   spec.add_dependency 'pg'
   spec.add_dependency 'thor'
 

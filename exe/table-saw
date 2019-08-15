@@ -24,7 +24,6 @@ class CLI < Thor
   method_option :password, default: ENV['PGPASSWORD']
   method_option :manifest, aliases: '-m', required: true
   method_option :output, aliases: '-o', default: 'output.dump'
-  method_option :pool
   def dump
     TableSaw.configure(options.to_hash)
     records = TableSaw::DependencyGraph::Build.new(TableSaw::Manifest.instance).call

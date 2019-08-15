@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     table_saw (1.2.0)
-      connection_pool
       pg
       thor
 
@@ -42,7 +41,6 @@ GEM
       railties (>= 3.0.0)
       thor (>= 0.14.6)
     concurrent-ruby (1.1.5)
-    connection_pool (2.2.2)
     crass (1.0.4)
     database_cleaner (1.7.0)
     diff-lcs (1.3)
