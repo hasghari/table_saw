@@ -2,10 +2,14 @@
 
 module TableSaw
   class Configuration
-    attr_accessor :dbname, :host, :port, :user, :password, :manifest, :output
+    attr_accessor :dbname, :host, :port, :user, :password, :manifest, :output, :pool
 
     def connection
       { dbname: dbname, host: host, port: port, user: user, password: password }
+    end
+
+    def pool_size
+      (pool || 2).to_i
     end
 
     def url=(value)
