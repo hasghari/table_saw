@@ -2,12 +2,10 @@
 
 module TableSaw
   class InformationSchema
-    def belongs_to
-      foreign_key_relationships.belongs_to
-    end
-
-    def has_many
-      foreign_key_relationships.has_many
+    %i(belongs_to constraint_names has_many).each do |method_name|
+      define_method method_name do
+        foreign_key_relationships.public_send method_name
+      end
     end
 
     def primary_keys

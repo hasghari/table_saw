@@ -5,6 +5,7 @@ module TableSaw
     class ForeignKeyRelationships
       QUERY = <<~SQL
         select
+          tc.constraint_name,
           tc.table_name as from_table,
           kcu.column_name as from_column,
           ccu.table_name as to_table,
@@ -24,6 +25,12 @@ module TableSaw
       def has_many
         @has_many ||= result.each_with_object(Hash.new { |h, k| h[k] = [] }) do |row, memo|
           memo[row['to_table']].push([row['from_table'], row['from_column']])
+        end
+      end
+
+      def constraint_names
+        @constraint_names ||= result.each_with_object(Hash.new { |h, k| h[k] = [] }) do |row, memo|
+          memo[row['from_table']].push(row['constraint_name'])
         end
       end
 

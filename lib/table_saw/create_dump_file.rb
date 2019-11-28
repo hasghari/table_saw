@@ -13,10 +13,11 @@ module TableSaw
     def call
       File.delete(file) if File.exist?(file)
 
+      alter_constraints_to_deferrable
+
       write_to_file <<~SQL
         BEGIN;
 
-        SET session_replication_role = replica;
         SET statement_timeout = 0;
         SET lock_timeout = 0;
         SET client_encoding = 'UTF8';
@@ -28,6 +29,8 @@ module TableSaw
       SQL
 
       records.each do |name, table|
+        defer_constraints(name)
+
         write_to_file <<~COMMENT
           --
           -- Data for Name: #{name}; Type: TABLE DATA
@@ -59,6 +62,34 @@ module TableSaw
     # rubocop:enable Metrics/MethodLength,Metrics/AbcSize
 
     private
+
+    def alter_constraints_to_deferrable
+      records.each_key do |name|
+        write_to_file <<~COMMENT
+          --
+          -- Alter Constraints for Name: #{name}; Type: DEFERRABLE
+          --
+
+        COMMENT
+
+        TableSaw.information_schema.constraint_names[name].each do |constraint_name|
+          write_to_file "ALTER TABLE #{name} ALTER CONSTRAINT #{constraint_name} DEFERRABLE;"
+        end
+      end
+    end
+
+    def defer_constraints(name)
+      write_to_file <<~COMMENT
+        --
+        -- Set Constraints for Name: #{name}; Type: DEFERRED
+        --
+
+      COMMENT
+
+      TableSaw.information_schema.constraint_names[name].each do |constraint_name|
+        write_to_file "SET CONSTRAINTS #{constraint_name} DEFERRED;"
+      end
+    end
 
     def refresh_materialized_views
       TableSaw::Queries::MaterializedViews.new.call.each do |view|

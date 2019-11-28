@@ -14,4 +14,10 @@ RSpec.describe TableSaw::Queries::ForeignKeyRelationships do
       expect(query.has_many).to eq('authors' => [%w(books author_id)], 'books' => [%w(chapters book_id)])
     end
   end
+
+  describe '#constraint_names' do
+    it 'returns hash of constraint names for table' do
+      expect(query.constraint_names['books'].size).to eq 1
+    end
+  end
 end
