@@ -13,7 +13,7 @@ module TableSaw
     def call
       File.delete(file) if File.exist?(file)
 
-      alter_constraints_to_deferrable
+      alter_constraints_deferrability
 
       write_to_file <<~SQL
         BEGIN;
@@ -58,22 +58,24 @@ module TableSaw
       restart_sequences
 
       write_to_file 'COMMIT;'
+
+      alter_constraints_deferrability keyword: 'NOT DEFERRABLE'
     end
     # rubocop:enable Metrics/MethodLength,Metrics/AbcSize
 
     private
 
-    def alter_constraints_to_deferrable
+    def alter_constraints_deferrability(keyword: 'DEFERRABLE')
       records.each_key do |name|
         write_to_file <<~COMMENT
           --
-          -- Alter Constraints for Name: #{name}; Type: DEFERRABLE
+          -- Alter Constraints for Name: #{name}; Type: #{keyword}
           --
 
         COMMENT
 
         TableSaw.information_schema.constraint_names[name].each do |constraint_name|
-          write_to_file "ALTER TABLE #{name} ALTER CONSTRAINT #{constraint_name} DEFERRABLE;"
+          write_to_file "ALTER TABLE #{name} ALTER CONSTRAINT #{constraint_name} #{keyword};"
         end
       end
     end
