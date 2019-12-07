@@ -23,10 +23,10 @@ Gem::Specification.new do |spec|
   spec.executables   = ['table-saw']
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'activerecord', '>= 5.2'
   spec.add_dependency 'pg'
   spec.add_dependency 'thor'
 
-  spec.add_development_dependency 'activerecord', '~> 5.2'
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'combustion', '~> 1.1'
   spec.add_development_dependency 'database_cleaner', '~> 1.7'

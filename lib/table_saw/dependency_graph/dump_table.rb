@@ -14,7 +14,9 @@ module TableSaw
 
       def copy_statement
         if partial
-          "select * from #{name} where #{primary_key} in (#{ids.to_a.join(',')})"
+          format 'select * from %{name} where %{clause}',
+                 name: name, clause: TableSaw::Queries::SerializeSqlInClause.new(name, primary_key, ids.to_a).call
+
         else
           "select * from #{name}"
         end

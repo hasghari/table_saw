@@ -41,9 +41,11 @@ module TableSaw
         return [] unless directive.selectable?
 
         TableSaw::Connection.exec(
-          format('select %{primary_key} from %{table} where %{column} in (%{ids})',
-                 primary_key: TableSaw.information_schema.primary_keys[table], table: table, column: column,
-                 ids: directive.ids.join(','))
+          format(
+            'select %{primary_key} from %{table} where %{clause}',
+            primary_key: TableSaw.information_schema.primary_keys[table], table: table,
+            clause: TableSaw::Queries::SerializeSqlInClause.new(table, column, directive.ids).call
+          )
         )
       end
     end
