@@ -18,7 +18,7 @@ module TableSaw
       private
 
       def db_column
-        @db_column ||= connection.columns(table_name).find { |c| c.name == column }
+        TableSaw.schema_cache.columns_hash(table_name)[column]
       end
 
       def serialized_values

@@ -14,7 +14,7 @@ module TableSaw
         valid_associations.map do |table, column|
           TableSaw::DependencyGraph::AddDirective.new(
             table,
-            ids: query_result(table, column).map { |r| r[TableSaw.information_schema.primary_keys[table]] },
+            ids: query_result(table, column).map { |r| r[TableSaw.schema_cache.primary_keys(table)] },
             partial: directive.partial?
           )
         end
@@ -29,7 +29,7 @@ module TableSaw
       # rubocop:disable Metrics/AbcSize
       def valid_associations
         associations.select do |table, _column|
-          next false if directive.partial? && !TableSaw.information_schema.primary_keys.key?(table)
+          next false if directive.partial? && TableSaw.schema_cache.primary_keys(table).nil?
           next true if directive.has_many.include?(table)
 
           manifest.has_many.fetch(directive.table_name, []).include?(table)
@@ -43,7 +43,7 @@ module TableSaw
         TableSaw::Connection.exec(
           format(
             'select %{primary_key} from %{table} where %{clause}',
-            primary_key: TableSaw.information_schema.primary_keys[table], table: table,
+            primary_key: TableSaw.schema_cache.primary_keys(table), table: table,
             clause: TableSaw::Queries::SerializeSqlInClause.new(table, column, directive.ids).call
           )
         )

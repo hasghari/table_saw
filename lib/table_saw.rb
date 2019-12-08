@@ -25,4 +25,8 @@ module TableSaw
   def self.information_schema
     @information_schema ||= TableSaw::InformationSchema.new
   end
+
+  def self.schema_cache
+    TableSaw::Connection.adapter.schema_cache
+  end
 end

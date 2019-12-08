@@ -8,10 +8,6 @@ module TableSaw
       end
     end
 
-    def primary_keys
-      @primary_keys ||= TableSaw::Queries::PrimaryKeys.new.call
-    end
-
     private
 
     def foreign_key_relationships
