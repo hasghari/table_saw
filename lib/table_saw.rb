@@ -6,6 +6,7 @@ require 'table_saw/dependency_graph'
 require 'table_saw/information_schema'
 require 'table_saw/manifest'
 require 'table_saw/queries'
+require 'table_saw/formats'
 
 module TableSaw
   def self.configuration

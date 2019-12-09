@@ -24,10 +24,11 @@ class CLI < Thor
   method_option :password, default: ENV['PGPASSWORD']
   method_option :manifest, aliases: '-m', required: true
   method_option :output, aliases: '-o', default: 'output.dump'
+  method_option :format, type: :hash, default: { 'type' => 'copy' }
   def dump
     TableSaw.configure(options.to_hash)
     records = TableSaw::DependencyGraph::Build.new(TableSaw::Manifest.instance).call
-    TableSaw::CreateDumpFile.new(records, options[:output]).call
+    TableSaw::CreateDumpFile.new(records, output: options[:output], format: options[:format]).call
   end
 
   desc 'version', 'Print version of table-saw'

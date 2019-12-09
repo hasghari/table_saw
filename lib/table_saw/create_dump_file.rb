@@ -2,11 +2,17 @@
 
 module TableSaw
   class CreateDumpFile
-    attr_reader :records, :file
+    attr_reader :records, :file, :format
 
-    def initialize(records, file = 'psql.dump')
+    FORMATS = {
+      'copy' => TableSaw::Formats::Copy,
+      'insert' => TableSaw::Formats::Insert
+    }.freeze
+
+    def initialize(records, output:, format:)
       @records = records
-      @file = file
+      @file = output
+      @format = format
     end
 
     # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
@@ -38,26 +44,26 @@ module TableSaw
 
         COMMENT
 
-        write_to_file <<~SQL
-          COPY #{name} (#{quoted_columns(name)}) FROM STDIN;
-        SQL
+        formatter = FORMATS.fetch(format.fetch('type', 'copy'), TableSaw::Formats::Copy).new(name, options: format)
+
+        Array.wrap(formatter.header).each { |line| write_to_file(line) }
 
         TableSaw::Connection.with do |conn|
-          conn.copy_data "COPY (#{table.copy_statement}) TO STDOUT" do
+          conn.copy_data "COPY (#{table.copy_statement}) TO STDOUT", formatter.coder do
             while (row = conn.get_copy_data)
-              write_to_file row
+              write_to_file formatter.dump_row(row)
             end
           end
         end
 
-        write_to_file '\.'
-        write_to_file "\n"
+        Array.wrap(formatter.footer).each { |line| write_to_file(line) }
       end
+
+      write_to_file 'COMMIT;'
+      write_to_file "\n"
 
       refresh_materialized_views
       restart_sequences
-
-      write_to_file 'COMMIT;'
 
       alter_constraints_deferrability keyword: 'NOT DEFERRABLE'
     end
@@ -113,10 +119,6 @@ module TableSaw
 
     def write_to_file(data)
       File.open(file, 'ab') { |f| f.puts(data) }
-    end
-
-    def quoted_columns(table)
-      TableSaw::Queries::TableColumns.new(table).call.map { |c| "\"#{c}\"" }.join(', ')
     end
   end
 end
