@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require 'pg'
 require 'active_record'
+
+require 'active_record/connection_adapters/abstract/connection_pool'
 require 'active_record/connection_adapters/postgresql_adapter'
 
 module TableSaw
@@ -9,11 +10,7 @@ module TableSaw
     def self.with
       raise ArgumentError, 'requires a block' unless block_given?
 
-      yield raw
-    end
-
-    def self.raw
-      @raw ||= PG::Connection.new(TableSaw.configuration.connection)
+      yield adapter.raw_connection
     end
 
     def self.exec(sql)
@@ -23,8 +20,11 @@ module TableSaw
     end
 
     def self.adapter
-      @adapter ||=
-        ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.new(nil, nil, TableSaw.configuration.connection, {})
+      @adapter ||= begin
+        config = TableSaw.configuration.connection
+        conn = ::PG::Connection.new(config)
+        ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.new(conn, nil, config, {})
+      end
     end
   end
 end

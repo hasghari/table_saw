@@ -107,11 +107,11 @@ RSpec.describe TableSaw::DependencyGraph::Build do
       end
 
       it 'fetches records for original table' do
-        expect(graph.call['books'].ids).to eq Set.new(['1'])
+        expect(graph.call['books'].ids).to eq Set.new([1])
       end
 
       it 'fetches records for foreign keys when not listed explicitly' do
-        expect(graph.call['authors'].ids).to eq Set.new(['1'])
+        expect(graph.call['authors'].ids).to eq Set.new([1])
       end
     end
   end
@@ -158,7 +158,7 @@ RSpec.describe TableSaw::DependencyGraph::Build do
       end
 
       it 'fetches associated has_many' do
-        expect(graph.call['chapters'].ids).to eq Set.new(%w(1 2))
+        expect(graph.call['chapters'].ids).to eq Set.new([1, 2])
       end
     end
 
@@ -180,7 +180,7 @@ RSpec.describe TableSaw::DependencyGraph::Build do
       end
 
       it 'only fetches chapters in scope' do
-        expect(graph.call['chapters'].ids).to eq Set.new(%w(1 2))
+        expect(graph.call['chapters'].ids).to eq Set.new([1, 2])
       end
     end
   end

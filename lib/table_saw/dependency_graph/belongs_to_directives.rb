@@ -27,6 +27,7 @@ module TableSaw
         end
       end
 
+      # rubocop:disable Metrics/AbcSize
       def query_result(column)
         return [] unless directive.selectable?
 
@@ -34,10 +35,13 @@ module TableSaw
           format(
             'select distinct %{column} from %{table_name} where %{clause} and %{column} is not null',
             primary_key: directive.primary_key, column: column, table_name: directive.table_name,
-            clause: TableSaw::Queries::SerializeSqlInClause.new(directive.table_name, column, directive.ids).call
+            clause: TableSaw::Queries::SerializeSqlInClause.new(directive.table_name,
+                                                                directive.primary_key,
+                                                                directive.ids).call
           )
         )
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
