@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'fileutils'
+
 module TableSaw
   class CreateDumpFile
     attr_reader :records, :file, :format
@@ -18,6 +20,7 @@ module TableSaw
     # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     def call
       File.delete(file) if File.exist?(file)
+      FileUtils.mkdir_p(File.dirname(file))
 
       alter_constraints_deferrability
 
