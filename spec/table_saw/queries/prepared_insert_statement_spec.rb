@@ -33,7 +33,8 @@ RSpec.describe TableSaw::Queries::PreparedInsertStatement do
 
       it 'returns a prepared statement' do
         expect(query.call.sql).to eq <<~SQL.squish
-          PREPARE books_insert_plan (bigint, bigint, character varying) AS INSERT INTO books VALUES ($1, $2, $3);
+          PREPARE books_insert_plan (bigint, bigint, character varying, character varying[])
+            AS INSERT INTO books VALUES ($1, $2, $3, $4);
         SQL
       end
     end

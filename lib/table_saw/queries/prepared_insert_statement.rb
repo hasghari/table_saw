@@ -27,7 +27,7 @@ module TableSaw
       end
 
       def column_types
-        TableSaw.schema_cache.columns(table_name).map(&:sql_type).join(', ')
+        TableSaw.schema_cache.columns(table_name).map(&:sql_type_metadata).map(&:sql_type).join(', ')
       end
 
       def values_clause

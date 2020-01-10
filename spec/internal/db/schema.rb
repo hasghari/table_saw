@@ -8,6 +8,7 @@ ActiveRecord::Schema.define(version: 0) do
   create_table :books do |t|
     t.references :author, foreign_key: { on_delete: :cascade }
     t.string :name
+    t.string :tags, array: true
   end
 
   create_table :chapters do |t|

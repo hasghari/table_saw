@@ -19,10 +19,10 @@ RSpec.describe TableSaw::Queries::ExecuteInsertStatement do
     context 'with books table' do
       let(:name) { 'books_insert_plan' }
       let(:table_name) { 'books' }
-      let(:row) { ['8', '34', 'Digital Fortress'] }
+      let(:row) { ['8', '34', 'Digital Fortress', %w(thriller mystery)] }
 
       it 'returns correct statement' do
-        expect(query.call).to eq "EXECUTE books_insert_plan(8, 34, 'Digital Fortress');"
+        expect(query.call).to eq "EXECUTE books_insert_plan(8, 34, 'Digital Fortress', '{thriller,mystery}');"
       end
     end
   end
