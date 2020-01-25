@@ -30,13 +30,17 @@ module TableSaw
         TableSaw.schema_cache.columns(table_name).map(&:sql_type_metadata).map(&:sql_type).join(', ')
       end
 
+      def column_names
+        TableSaw.schema_cache.columns(table_name).map(&:name).join(', ')
+      end
+
       def values_clause
         1.upto(TableSaw.schema_cache.columns(table_name).size).map { |i| "$#{i}" }.join(', ')
       end
 
       def prepare_statement
         <<~SQL.squish
-          PREPARE #{name} (#{column_types}) AS INSERT INTO #{table_name} VALUES (#{values_clause})
+          PREPARE #{name} (#{column_types}) AS INSERT INTO #{table_name} (#{column_names}) VALUES (#{values_clause})
         SQL
       end
 

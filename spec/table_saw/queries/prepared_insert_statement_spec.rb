@@ -11,7 +11,7 @@ RSpec.describe TableSaw::Queries::PreparedInsertStatement do
 
       it 'returns a prepared statement' do
         expect(query.call.sql).to eq <<~SQL.squish
-          PREPARE authors_insert_plan (bigint, character varying) AS INSERT INTO authors VALUES ($1, $2);
+          PREPARE authors_insert_plan (bigint, character varying) AS INSERT INTO authors (id, name) VALUES ($1, $2);
         SQL
       end
     end
@@ -22,7 +22,7 @@ RSpec.describe TableSaw::Queries::PreparedInsertStatement do
 
       it 'returns prepared statement with do nothing on conflict' do
         expect(query.call.sql).to eq <<~SQL.squish
-          PREPARE authors_insert_plan (bigint, character varying) AS INSERT INTO authors VALUES ($1, $2)
+          PREPARE authors_insert_plan (bigint, character varying) AS INSERT INTO authors (id, name) VALUES ($1, $2)
             ON CONFLICT DO NOTHING;
         SQL
       end
@@ -34,7 +34,7 @@ RSpec.describe TableSaw::Queries::PreparedInsertStatement do
       it 'returns a prepared statement' do
         expect(query.call.sql).to eq <<~SQL.squish
           PREPARE books_insert_plan (bigint, bigint, character varying, character varying[])
-            AS INSERT INTO books VALUES ($1, $2, $3, $4);
+            AS INSERT INTO books (id, author_id, name, tags) VALUES ($1, $2, $3, $4);
         SQL
       end
     end
