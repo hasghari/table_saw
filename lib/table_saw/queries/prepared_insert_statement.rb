@@ -31,7 +31,9 @@ module TableSaw
       end
 
       def column_names
-        TableSaw.schema_cache.columns(table_name).map(&:name).join(', ')
+        TableSaw.schema_cache.columns(table_name)
+          .map { |column| TableSaw.schema_cache.connection.quote_column_name(column.name) }
+          .join(', ')
       end
 
       def values_clause
