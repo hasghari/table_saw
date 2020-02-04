@@ -22,4 +22,9 @@ ActiveRecord::Schema.define(version: 0) do
   end
 
   create_view :popular_authors, materialized: true
+
+  create_table :magazines do |t|
+    t.string :title
+    t.string :from
+  end
 end

@@ -6,7 +6,7 @@ RSpec.describe TableSaw::Formats::Insert do
   describe '#header' do
     it 'returns prepared statement' do
       expect(formatter.header).to eq <<~SQL.squish
-        PREPARE authors_insert_plan (bigint, character varying) AS INSERT INTO authors (id, name) VALUES ($1, $2);
+        PREPARE authors_insert_plan (bigint, character varying) AS INSERT INTO authors ("id", "name") VALUES ($1, $2);
       SQL
     end
   end
