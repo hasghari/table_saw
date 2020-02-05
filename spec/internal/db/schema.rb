@@ -9,6 +9,7 @@ ActiveRecord::Schema.define(version: 0) do
     t.references :author, foreign_key: { on_delete: :cascade }
     t.string :name
     t.string :tags, array: true
+    t.json :metadata
   end
 
   create_table :chapters do |t|

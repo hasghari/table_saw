@@ -18,16 +18,17 @@ module TableSaw
 
       def values
         TableSaw.schema_cache.columns(statement.table_name).zip(row)
-          .map { |column, value| connection.quote(connection.type_cast_from_column(column, value)) }
+          .map { |column, value| quote_value(column, value) }
           .join(', ')
       end
 
-      def schema_cache
-        TableSaw.schema_cache
+      def connection
+        TableSaw.schema_cache.connection
       end
 
-      def connection
-        schema_cache.connection
+      def quote_value(column, value)
+        type = connection.lookup_cast_type_from_column(column)
+        connection.quote(type.serialize(type.deserialize(value)))
       end
     end
   end
