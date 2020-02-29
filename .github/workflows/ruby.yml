@@ -44,9 +44,9 @@ jobs:
           bundle install --jobs 4 --retry 3
 
       - name: Run tests with RSpec
-        uses: paambaati/codeclimate-action@v2.4.0
+        uses: paambaati/codeclimate-action@v2.5.3
         env:
-          CC_TEST_REPORTER_ID: 5432d4e95a7749f237cf9e659c44ba28c5c91fa65436b15c5bc849d6d9ebc049
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: bundle exec rspec
           debug: false
