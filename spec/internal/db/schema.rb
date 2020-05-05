@@ -22,6 +22,11 @@ ActiveRecord::Schema.define(version: 0) do
     t.string :version, primary_key: true
   end
 
+  create_table :slugs do |t|
+    t.string :slug
+    t.references :sluggable, polymorphic: true
+  end
+
   create_view :popular_authors, materialized: true
 
   create_table :magazines do |t|

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'yaml'
+require 'table_saw/associations'
 
 module TableSaw
   class Manifest
@@ -57,6 +58,14 @@ module TableSaw
 
     def has_many
       @has_many ||= config.fetch('has_many', {})
+    end
+
+    def foreign_keys
+      @foreign_keys ||= config.fetch('foreign_keys', [])
+    end
+
+    def associations
+      @associations ||= TableSaw::Associations.new(self)
     end
   end
 end

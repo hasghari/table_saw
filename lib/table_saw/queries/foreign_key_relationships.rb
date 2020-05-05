@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'table_saw/foreign_key'
+require 'set'
+
 module TableSaw
   module Queries
     class ForeignKeyRelationships
@@ -16,21 +19,17 @@ module TableSaw
         where tc.constraint_type = 'FOREIGN KEY'
       SQL
 
-      def belongs_to
-        @belongs_to ||= result.each_with_object(Hash.new { |h, k| h[k] = {} }) do |row, memo|
-          memo[row['from_table']][row['from_column']] = row['to_table']
-        end
-      end
-
-      def has_many
-        @has_many ||= result.each_with_object(Hash.new { |h, k| h[k] = [] }) do |row, memo|
-          memo[row['to_table']].push([row['from_table'], row['from_column']])
-        end
-      end
-
       def constraint_names
         @constraint_names ||= result.each_with_object(Hash.new { |h, k| h[k] = [] }) do |row, memo|
           memo[row['from_table']].push(row['constraint_name'])
+        end
+      end
+
+      def foreign_keys
+        @foreign_keys ||= result.map do |row|
+          TableSaw::ForeignKey.new(name: row['constraint_name'],
+                                   from_table: row['from_table'], from_column: row['from_column'],
+                                   to_table: row['to_table'], to_column: row['to_column'])
         end
       end
 

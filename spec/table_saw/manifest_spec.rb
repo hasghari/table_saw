@@ -64,7 +64,7 @@ RSpec.describe TableSaw::Manifest do
       end
     end
 
-    context 'when manifest file does not exist' do
+    context 'when manifest file exists' do
       let(:file) { 'spec/fixtures/manifest.yml' }
 
       it 'returns manifest instance' do

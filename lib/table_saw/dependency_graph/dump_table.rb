@@ -31,7 +31,7 @@ module TableSaw
       private
 
       def fetch_belongs_to(directive)
-        TableSaw::DependencyGraph::BelongsToDirectives.new(directive).call
+        TableSaw::DependencyGraph::BelongsToDirectives.new(manifest, directive).call
       end
 
       def fetch_has_many(directive)

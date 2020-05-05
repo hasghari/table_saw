@@ -114,6 +114,32 @@ RSpec.describe TableSaw::DependencyGraph::Build do
         expect(graph.call['authors'].ids).to eq Set.new([1])
       end
     end
+
+    context 'with polymorphic table' do
+      let(:manifest) do
+        TableSaw::Manifest.new(
+          'tables' => [
+            { 'table' => 'slugs', 'query' => 'select id from slugs where id = 1' }
+          ],
+          'foreign_keys' => [
+            {
+              'from_table' => 'slugs',
+              'from_column' => 'sluggable_id:sluggable_type(Book)',
+              'to_table' => 'books',
+              'to_column' => 'id'
+            }
+          ]
+        )
+      end
+
+      before do
+        Slug.create!(id: 1, slug: 'angels-demons', sluggable_id: 1, sluggable_type: 'Book')
+      end
+
+      it 'fetches records for polymorphic foreign keys' do
+        expect(graph.call['books'].ids).to eq Set.new([1])
+      end
+    end
   end
 
   context 'when has_many whitelisted' do
@@ -181,6 +207,70 @@ RSpec.describe TableSaw::DependencyGraph::Build do
 
       it 'only fetches chapters in scope' do
         expect(graph.call['chapters'].ids).to eq Set.new([1, 2])
+      end
+    end
+  end
+
+  context 'when foreign_keys (polymorphic) listed' do
+    before do
+      Author.create!(id: 1, name: 'Dan Brown')
+      Book.create!(id: 1, author_id: 1, name: 'Angels & Demons')
+      Chapter.create!(id: 1, book_id: 1)
+      Chapter.create!(id: 2, book_id: 1)
+      Slug.create!(id: 1, slug: 'angels-demons', sluggable_id: 1, sluggable_type: 'Book')
+    end
+
+    context 'with full table' do
+      let(:manifest) do
+        TableSaw::Manifest.new(
+          'tables' => [
+            { 'table' => 'books' }
+          ],
+          'has_many' => {
+            'books' => ['slugs']
+          },
+          'foreign_keys' => [
+            {
+              'from_table' => 'slugs',
+              'from_column' => 'sluggable_id:sluggable_type(Book)',
+              'to_table' => 'books',
+              'to_column' => 'id'
+            }
+          ]
+        )
+      end
+
+      it 'fetches associated has_many' do
+        expect(graph.call.keys).to match_array %w(authors books slugs)
+      end
+
+      it 'has full dump tables for all' do
+        expect(graph.call.values).to all(have_attributes(partial: false))
+      end
+    end
+
+    context 'with partial table' do
+      let(:manifest) do
+        TableSaw::Manifest.new(
+          'tables' => [
+            { 'table' => 'books', 'query' => 'select id from books where id = 1' }
+          ],
+          'has_many' => {
+            'books' => ['slugs']
+          },
+          'foreign_keys' => [
+            {
+              'from_table' => 'slugs',
+              'from_column' => 'sluggable_id:sluggable_type(Book)',
+              'to_table' => 'books',
+              'to_column' => 'id'
+            }
+          ]
+        )
+      end
+
+      it 'fetches associated has_many' do
+        expect(graph.call['slugs'].ids).to eq Set.new([1])
       end
     end
   end
