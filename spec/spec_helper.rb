@@ -14,11 +14,15 @@ require 'table_saw'
 
 require 'pry'
 
-ActiveRecord::Base.connection_config.tap do |config|
-  TableSaw.configure(
-    host: config[:host], dbname: config[:database], user: config[:username], password: config[:password]
-  )
-end
+db_config = if ActiveRecord.gem_version < Gem::Version.create('6.1.0')
+              ActiveRecord::Base.connection_config
+            else
+              ActiveRecord::Base.connection_pool.db_config.configuration_hash
+            end
+
+TableSaw.configure(
+  host: db_config[:host], dbname: db_config[:database], user: db_config[:username], password: db_config[:password]
+)
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
