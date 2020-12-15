@@ -7,9 +7,21 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        ruby:
+          - 2.6.x
+          - 2.7.x
+        activerecord:
+          - 6.0.0
+          - 6.1.0
+
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/activerecord_${{ matrix.activerecord }}.gemfile
+
     services:
       postgres:
-        image: postgres:12.2
+        image: postgres:12.4
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -22,15 +34,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Ruby 2.6
+      - name: Set up Ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.6.x
+          ruby-version: ${{ matrix.ruby }}
 
       - uses: actions/cache@v1
         with:
           path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          key: ${{ runner.os }}-gems-${{ hashFiles(format('gemfiles/activerecord_{0}.gemfile.lock', matrix.activerecord)) }}
           restore-keys: |
             ${{ runner.os }}-gems-
 
@@ -41,7 +53,7 @@ jobs:
       - name: Configure Bundler
         run: |
           gem install bundler -v 2.1.4 --no-document
-          bundle config path 'vendor/bundle'
+          bundle config set path 'vendor/bundle'
           bundle install --jobs 4 --retry 3
 
       - name: Run tests with RSpec

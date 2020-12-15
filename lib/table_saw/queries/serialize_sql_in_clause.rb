@@ -23,7 +23,7 @@ module TableSaw
 
       def serialized_values
         values.map do |value|
-          connection.quote(connection.type_cast_from_column(db_column, value))
+          connection.quote_default_expression(value, db_column)
         end
       end
 

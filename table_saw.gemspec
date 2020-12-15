@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'thor'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'combustion', '~> 1.1'
+  spec.add_development_dependency 'combustion', '~> 1.3'
   spec.add_development_dependency 'database_cleaner', '~> 1.7'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake', '~> 13.0'
