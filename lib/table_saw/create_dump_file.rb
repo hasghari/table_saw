@@ -49,7 +49,7 @@ module TableSaw
 
         formatter = FORMATS.fetch(format.fetch('type', 'copy'), TableSaw::Formats::Copy).new(name, options: format)
 
-        Array.wrap(formatter.header).each { |line| write_to_file(line) }
+        Array(formatter.header).each { |line| write_to_file(line) }
 
         TableSaw::Connection.with do |conn|
           conn.copy_data "COPY (#{table.copy_statement}) TO STDOUT", formatter.coder do
@@ -59,7 +59,7 @@ module TableSaw
           end
         end
 
-        Array.wrap(formatter.footer).each { |line| write_to_file(line) }
+        Array(formatter.footer).each { |line| write_to_file(line) }
       end
 
       write_to_file 'COMMIT;'
