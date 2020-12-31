@@ -36,7 +36,7 @@ module TableSaw
 
     attr_reader :name, :from_table, :from_column, :to_table, :to_column
 
-    def initialize(name: nil, from_table:, from_column:, to_table:, to_column:)
+    def initialize(from_table:, from_column:, to_table:, to_column:, name: nil)
       @name = name
       @from_table = from_table
       @from_column = from_column

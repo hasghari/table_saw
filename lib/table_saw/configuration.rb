@@ -10,7 +10,7 @@ module TableSaw
 
     def url=(value)
       URI.parse(value).tap do |uri|
-        self.dbname = uri.path[1..-1]
+        self.dbname = uri.path[1..]
         self.host = uri.host
         self.port = uri.port
         self.user = uri.user
