@@ -23,7 +23,7 @@ module TableSaw
       end
 
       def sql
-        [prepare_statement, conflict_statement].compact.join(' ') + ';'
+        "#{[prepare_statement, conflict_statement].compact.join(' ')};"
       end
 
       def column_types

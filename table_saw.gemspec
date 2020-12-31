@@ -23,6 +23,8 @@ Gem::Specification.new do |spec|
   spec.executables   = ['table-saw']
   spec.require_paths = ['lib']
 
+  spec.required_ruby_version = '>= 2.6'
+
   spec.add_dependency 'activerecord', '>= 5.2'
   spec.add_dependency 'pg'
   spec.add_dependency 'thor'

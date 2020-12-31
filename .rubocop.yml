@@ -1,7 +1,10 @@
 require: rubocop-rspec
 
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.6
+  Exclude:
+    - gemfiles/*
 
 Layout/LineLength:
   Max: 120
