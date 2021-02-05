@@ -25,6 +25,8 @@ class CLI < Thor
   method_option :manifest, aliases: '-m', required: true
   method_option :output, aliases: '-o', default: 'output.dump'
   method_option :format, type: :hash, default: { 'type' => 'copy' }
+  method_option :variables, aliases: '-v', type: :hash, default: {},
+                            desc: 'This option takes a hash to override variables provided in the manifest'
   def dump
     TableSaw.configure(options.to_hash)
     records = TableSaw::DependencyGraph::Build.new(TableSaw::Manifest.instance).call
