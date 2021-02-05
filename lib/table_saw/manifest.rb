@@ -47,7 +47,8 @@ module TableSaw
     end
 
     def variables
-      config.fetch('variables', {})
+      vars = config.fetch('variables', {})
+      vars.merge(TableSaw.configuration.variables.slice(*vars.keys))
     end
 
     def tables
