@@ -2,7 +2,8 @@
 
 module TableSaw
   class Configuration
-    attr_accessor :dbname, :host, :port, :user, :password, :manifest, :output, :format, :variables
+    attr_writer :variables
+    attr_accessor :dbname, :host, :port, :user, :password, :manifest, :output, :format
 
     def connection
       { dbname: dbname, host: host, port: port, user: user, password: password }
@@ -16,6 +17,10 @@ module TableSaw
         self.user = uri.user
         self.password = uri.password
       end
+    end
+
+    def variables
+      @variables || {}
     end
   end
 end
