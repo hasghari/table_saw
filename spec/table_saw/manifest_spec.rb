@@ -35,6 +35,16 @@ RSpec.describe TableSaw::Manifest do
     end
   end
 
+  describe '#variables with overrides' do
+    before do
+      TableSaw::configuration.variables = { 'author_id' => 42 }
+    end
+
+    it 'overrides the manifest variable' do
+      expect(manifest.variables).to eq 'author_id' => 42
+    end
+  end
+
   describe '#tables' do
     it 'returns correct size' do
       expect(manifest.tables.size).to eq 2

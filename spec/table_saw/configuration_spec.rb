@@ -28,4 +28,14 @@ RSpec.describe TableSaw::Configuration do
       expect(config.password).to eq 'asghari'
     end
   end
+
+  describe '#variables' do
+    it 'should not be nil' do
+      expect(config.variables).not_to be(nil)
+    end
+
+    it 'should be a hash' do
+      expect(config.variables).to be_a_kind_of(Hash)
+    end
+  end
 end
