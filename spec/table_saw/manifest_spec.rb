@@ -36,8 +36,11 @@ RSpec.describe TableSaw::Manifest do
   end
 
   describe '#variables with overrides' do
-    before do
-      TableSaw::configuration.variables = { 'author_id' => 42 }
+    around do |example|
+      variables = TableSaw.configuration.variables
+      TableSaw.configure { |c| c.variables = { 'author_id' => 42 } }
+      example.run
+      TableSaw.configure { |c| c.variables = variables }
     end
 
     it 'overrides the manifest variable' do
