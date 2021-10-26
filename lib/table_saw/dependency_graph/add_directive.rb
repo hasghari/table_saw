@@ -6,7 +6,7 @@ module TableSaw
       attr_reader :table_name, :partial, :has_many
       attr_accessor :ids
 
-      def initialize(table_name, ids: [], partial: true, has_many: [])
+      def initialize(table_name, ids: [], partial: true, has_many: {})
         @table_name = table_name
         @ids = ids
         @partial = partial

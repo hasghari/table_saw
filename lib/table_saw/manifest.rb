@@ -5,6 +5,35 @@ require 'table_saw/associations'
 
 module TableSaw
   class Manifest
+    class HasManyEntry
+      def self.build(config)
+        config.each_with_object({}) do |(table, options), memo|
+          case table
+          when String
+            memo[table] = new(table, options)
+          when Hash
+            table, options = table.first
+            memo[table] = new(table, options)
+          end
+        end
+      end
+
+      attr_reader :table, :options
+
+      def initialize(table, options)
+        @table = table
+        @options = options || {}
+      end
+
+      def scope
+        options['scope']
+      end
+
+      def limit
+        options['limit']
+      end
+    end
+
     class Table
       attr_reader :variables, :config
 
@@ -30,7 +59,7 @@ module TableSaw
       end
 
       def has_many
-        config.fetch('has_many', [])
+        config.fetch('has_many', {}).then { |config| HasManyEntry.build(config) }
       end
     end
 
@@ -58,7 +87,9 @@ module TableSaw
     end
 
     def has_many
-      @has_many ||= config.fetch('has_many', {})
+      @has_many ||= config.fetch('has_many', {}).transform_values do |value|
+        HasManyEntry.build(value)
+      end
     end
 
     def foreign_keys

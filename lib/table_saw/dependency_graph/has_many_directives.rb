@@ -3,10 +3,6 @@
 module TableSaw
   module DependencyGraph
     class HasManyDirectives
-      QUERY = <<~SQL
-        select %{primary_key} from %{table} where %{clause} and %{polymorphic}
-      SQL
-
       attr_reader :manifest, :directive
 
       def initialize(manifest, directive)
@@ -34,25 +30,20 @@ module TableSaw
       def valid_associations
         associations.select do |fk|
           next false if directive.partial? && TableSaw.schema_cache.primary_keys(fk.from_table).nil?
-          next true if directive.has_many.include?(fk.from_table)
+          next true if directive.has_many.key?(fk.from_table)
 
-          manifest.has_many.fetch(directive.table_name, []).include?(fk.from_table)
+          manifest.has_many.fetch(directive.table_name, {}).key?(fk.from_table)
         end
       end
+      # rubocop:enable Metrics/AbcSize
 
       def query_result(foreign_key)
         return [] unless directive.selectable?
 
         TableSaw::Connection.exec(
-          format(QUERY, primary_key: TableSaw.schema_cache.primary_keys(foreign_key.from_table),
-                        table: foreign_key.from_table,
-                        clause: TableSaw::Queries::SerializeSqlInClause.new(foreign_key.from_table,
-                                                                            foreign_key.column.primary_key,
-                                                                            directive.ids).call,
-                        polymorphic: foreign_key.type_condition)
+          TableSaw::DependencyGraph::BuildHasManyQuery.new(manifest, directive, foreign_key).call
         )
       end
-      # rubocop:enable Metrics/AbcSize
     end
   end
 end
