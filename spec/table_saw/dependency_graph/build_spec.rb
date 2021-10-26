@@ -146,8 +146,8 @@ RSpec.describe TableSaw::DependencyGraph::Build do
     before do
       Author.create!(id: 1, name: 'Dan Brown')
       Book.create!(id: 1, author_id: 1, name: 'Angels & Demons')
-      Chapter.create!(id: 1, book_id: 1)
-      Chapter.create!(id: 2, book_id: 1)
+      Chapter.create!(id: 1, book_id: 1, title: 'Chapter 1')
+      Chapter.create!(id: 2, book_id: 1, title: 'Chapter 2')
     end
 
     context 'with full table' do
@@ -185,6 +185,40 @@ RSpec.describe TableSaw::DependencyGraph::Build do
 
       it 'fetches associated has_many' do
         expect(graph.call['chapters'].ids).to eq Set.new([1, 2])
+      end
+
+      context 'with has_many scope' do
+        let(:manifest) do
+          TableSaw::Manifest.new(
+            'tables' => [
+              { 'table' => 'books', 'query' => 'select id from books where id = 1' }
+            ],
+            'has_many' => {
+              'books' => [{ 'chapters' => { 'scope' => "title = 'Chapter 1'" } }]
+            }
+          )
+        end
+
+        it 'fetches associated has_many' do
+          expect(graph.call['chapters'].ids).to eq Set.new([1])
+        end
+      end
+
+      context 'with has_many limit' do
+        let(:manifest) do
+          TableSaw::Manifest.new(
+            'tables' => [
+              { 'table' => 'books', 'query' => 'select id from books where id = 1' }
+            ],
+            'has_many' => {
+              'books' => [{ 'chapters' => { 'limit' => 1 } }]
+            }
+          )
+        end
+
+        it 'fetches associated has_many' do
+          expect(graph.call['chapters'].ids).to(satisfy { |v| Set.new([1, 2]).superset?(v) })
+        end
       end
     end
 
