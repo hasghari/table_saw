@@ -12,10 +12,14 @@ jobs:
         ruby:
           - '2.7.5'
           - '3.0.3'
+          - '3.1.0'
         activerecord:
           - '6.0.0'
           - '6.1.0'
           - '7.0.0'
+        exclude:
+          - ruby: '3.1.0'
+            activerecord: '7.0.0'
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/activerecord_${{ matrix.activerecord }}.gemfile

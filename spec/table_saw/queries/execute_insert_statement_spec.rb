@@ -3,7 +3,7 @@
 RSpec.describe TableSaw::Queries::ExecuteInsertStatement do
   subject(:query) { described_class.new(statement, row) }
 
-  let(:statement) { OpenStruct.new(name: name, table_name: table_name) }
+  let(:statement) { TableSaw::Queries::PreparedInsertStatement::Statement.new(name, table_name) }
 
   describe '#call' do
     context 'with authors table' do

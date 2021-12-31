@@ -30,11 +30,11 @@ RSpec.describe TableSaw::Configuration do
   end
 
   describe '#variables' do
-    it 'should not be nil' do
+    it 'is not nil' do
       expect(config.variables).not_to be(nil)
     end
 
-    it 'should be a hash' do
+    it 'is a hash' do
       expect(config.variables).to be_a_kind_of(Hash)
     end
   end
