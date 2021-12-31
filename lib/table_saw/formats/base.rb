@@ -22,8 +22,7 @@ module TableSaw
         raise NotImplementedError
       end
 
-      def coder
-      end
+      def coder = nil
     end
   end
 end

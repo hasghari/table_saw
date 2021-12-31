@@ -2,7 +2,7 @@ require: rubocop-rspec
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.0
   Exclude:
     - gemfiles/*
 
@@ -12,15 +12,6 @@ Layout/LineLength:
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented_relative_to_receiver
 
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
-
-Lint/RaiseException:
-  Enabled: true
-
-Lint/StructNewOverride:
-  Enabled: true
-
 Naming/PredicateName:
   AllowedMethods:
     - has_many
@@ -28,23 +19,8 @@ Naming/PredicateName:
 Style/Documentation:
   Enabled: false
 
-Style/EmptyMethod:
-  EnforcedStyle: expanded
-
-Style/ExponentialNotation:
-  Enabled: true
-
 Style/FormatStringToken:
   EnforcedStyle: template
-
-Style/HashEachMethods:
-  Enabled: true
-
-Style/HashTransformKeys:
-  Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
