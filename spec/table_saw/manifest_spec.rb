@@ -48,6 +48,35 @@ RSpec.describe TableSaw::Manifest do
     end
   end
 
+  describe '#variables with interpolation' do
+    let(:config) do
+      {
+        'variables' => {
+          'author_id' => author_id,
+          'illustrator_id' => '%{author_id}'
+        },
+        'tables' => [
+          { 'table' => 'authors' },
+          { 'table' => 'books', 'query' => 'select * from books where author_id = %{illustrator_id}' }
+        ]
+      }
+    end
+    let(:author_id) { 134 }
+
+    it 'interpolates previous variables into following variables' do
+      expect(manifest.variables[:illustrator_id]).to eq manifest.variables[:author_id]
+      expect(manifest.variables[:illustrator_id]).to_not eq '%{illustrator_id}'
+    end
+
+    context 'when attempting to interpolate another variable before it is declared' do
+      let(:author_id) { '%{illustrator_id}' }
+
+      it 'does not interpolate following variables into the initial variables' do
+        expect(manifest.variables[:author_id]).to be_nil
+      end
+    end
+  end
+
   describe '#tables' do
     it 'returns correct size' do
       expect(manifest.tables.size).to eq 2
@@ -60,6 +89,26 @@ RSpec.describe TableSaw::Manifest do
 
       it 'returns correct query' do
         expect(manifest.tables.values.map(&:query)).to eq([nil, 'select * from books where author_id = 134'])
+      end
+
+      context 'when the table query uses interpolated variables' do
+        let(:config) do
+          {
+            'variables' => {
+              'author_id' => '1,3,4',
+              'book_ids' => 'select * from books where author_id in (%{author_id})'
+            },
+            'tables' => [
+              { 'table' => 'authors' },
+              { 'table' => 'books', 'query' => 'select * from books where book_id in (%{book_ids})' }
+            ]
+          }
+        end
+
+          it 'returns the correct query' do
+            composed_query = 'select * from books where book_id in (select * from books where author_id in (1,3,4))'
+            expect(manifest.tables.values.map(&:query)).to eq([nil, composed_query])
+          end
       end
     end
   end

@@ -5,6 +5,9 @@ require 'table_saw/associations'
 
 module TableSaw
   class Manifest
+    VARIABLE_INTERPOLATION_MATCHER = /%{(\w*)}/.freeze
+    private_constant :VARIABLE_INTERPOLATION_MATCHER
+
     class HasManyEntry
       def self.build(config)
         config.each_with_object({}) do |(table, options), memo|
@@ -77,7 +80,8 @@ module TableSaw
 
     def variables
       vars = config.fetch('variables', {})
-      vars.merge(TableSaw.configuration.variables.slice(*vars.keys))
+
+      parse_variables(vars: vars).merge(TableSaw.configuration.variables.slice(*vars.keys))
     end
 
     def tables
@@ -98,6 +102,31 @@ module TableSaw
 
     def associations
       @associations ||= TableSaw::Associations.new(self)
+    end
+
+    private
+
+    def parse_variables(vars:)
+      parsed_vars = {}
+      vars.each do |k, v|
+        lookup_keys = v.to_s.match(VARIABLE_INTERPOLATION_MATCHER)&.captures
+        parsed_vars[k] = if lookup_keys
+                           interpolate_variables(lookup_keys: lookup_keys, parsed_vars: parsed_vars, key: k, value: v)
+                         else
+                           v
+                         end
+      end
+      parsed_vars
+    end
+
+    def interpolate_variables(lookup_keys:, parsed_vars:, key:, value:)
+      lookup_keys.each do |lookup_key|
+        if parsed_vars[lookup_key].present?
+          parsed_vars[key] = value.gsub(VARIABLE_INTERPOLATION_MATCHER, parsed_vars[lookup_key].to_s)
+        end
+      end
+
+      parsed_vars[key]
     end
   end
 end
