@@ -24,4 +24,18 @@ RSpec.describe TableSaw do
       expect(configuration).to have_received(:dbname=).with('meerkat')
     end
   end
+
+  describe '::primary_key' do
+    context 'when table has a single primary key' do
+      it 'returns the first primary key found' do
+        expect(described_class.primary_key('books')).to eq('id')
+      end
+    end
+
+    context 'when table has multiple primary keys' do
+      it 'returns the primary key' do
+        expect(described_class.primary_key('revisions')).to eq('book_id')
+      end
+    end
+  end
 end

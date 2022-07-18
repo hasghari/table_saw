@@ -14,7 +14,7 @@ module TableSaw
         valid_associations.map do |fk|
           TableSaw::DependencyGraph::AddDirective.new(
             fk.from_table,
-            ids: query_result(fk).map { |r| r[TableSaw.schema_cache.primary_keys(fk.from_table)] },
+            ids: query_result(fk).map { |r| r[TableSaw.primary_key(fk.from_table)] },
             partial: directive.partial?
           )
         end
@@ -29,7 +29,7 @@ module TableSaw
       # rubocop:disable Metrics/AbcSize
       def valid_associations
         associations.select do |fk|
-          next false if directive.partial? && TableSaw.schema_cache.primary_keys(fk.from_table).nil?
+          next false if directive.partial? && TableSaw.primary_key(fk.from_table).nil?
           next true if directive.has_many.key?(fk.from_table)
 
           manifest.has_many.fetch(directive.table_name, {}).key?(fk.from_table)

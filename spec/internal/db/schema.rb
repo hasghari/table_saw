@@ -18,6 +18,13 @@ ActiveRecord::Schema.define(version: 0) do
     t.text :content
   end
 
+  create_table :revisions, id: false do |t|
+    t.integer :book_id
+    t.integer :time_dimension_id
+    t.string :errata
+  end
+  execute "ALTER TABLE revisions ADD PRIMARY KEY (book_id,time_dimension_id);"
+
   create_table :schema_migrations, id: false do |t|
     t.string :version, primary_key: true
   end

@@ -41,7 +41,7 @@ module TableSaw
       def select_ids(table)
         return [] unless table.partial?
 
-        TableSaw::Connection.exec(table.query).map { |row| row[TableSaw.schema_cache.primary_keys(table.name)] }
+        TableSaw::Connection.exec(table.query).map { |row| row[TableSaw.primary_key(table.name)] }
       end
     end
   end

@@ -30,4 +30,8 @@ module TableSaw
   def self.schema_cache
     TableSaw::Connection.adapter.schema_cache
   end
+
+  def self.primary_key(table_name)
+    Array.wrap(schema_cache.primary_keys(table_name)).first
+  end
 end

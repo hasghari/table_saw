@@ -24,7 +24,7 @@ module TableSaw
       end
 
       def primary_key
-        TableSaw.schema_cache.primary_keys(table_name)
+        TableSaw.primary_key(table_name)
       end
     end
   end

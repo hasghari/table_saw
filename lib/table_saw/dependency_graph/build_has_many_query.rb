@@ -25,7 +25,7 @@ module TableSaw
 
       # rubocop:disable Metrics/AbcSize
       def build_base_query
-        format(QUERY, primary_key: TableSaw.schema_cache.primary_keys(foreign_key.from_table),
+        format(QUERY, primary_key: TableSaw.primary_key(foreign_key.from_table),
                       table: foreign_key.from_table,
                       clause: TableSaw::Queries::SerializeSqlInClause.new(foreign_key.from_table,
                                                                           foreign_key.column.primary_key,
