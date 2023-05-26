@@ -19,7 +19,7 @@ module TableSaw
 
     # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
     def call
-      File.delete(file) if File.exist?(file)
+      FileUtils.rm_f(file)
       FileUtils.mkdir_p(File.dirname(file))
 
       alter_constraints_deferrability

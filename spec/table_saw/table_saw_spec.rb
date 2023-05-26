@@ -4,7 +4,7 @@ require 'table_saw/version'
 
 RSpec.describe TableSaw do
   it 'has a version number' do
-    expect(TableSaw::VERSION).not_to be nil
+    expect(TableSaw::VERSION).not_to be_nil
   end
 
   describe '::configure' do
