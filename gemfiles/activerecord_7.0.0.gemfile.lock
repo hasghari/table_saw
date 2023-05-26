@@ -2,7 +2,7 @@ PATH
   remote: ..
   specs:
     table_saw (3.0.0)
-      activerecord (>= 5.2)
+      activerecord (>= 6.0)
       pg
       thor
 
