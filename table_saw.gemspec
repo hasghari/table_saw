@@ -23,21 +23,10 @@ Gem::Specification.new do |spec|
   spec.executables   = ['table-saw']
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 2.7'
+  spec.required_ruby_version = '>= 3.0'
   spec.metadata['rubygems_mfa_required'] = 'true'
 
   spec.add_dependency 'activerecord', '>= 5.2'
   spec.add_dependency 'pg'
   spec.add_dependency 'thor'
-
-  spec.add_development_dependency 'appraisal'
-  spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'combustion', '~> 1.3'
-  spec.add_development_dependency 'database_cleaner', '~> 2'
-  spec.add_development_dependency 'pry'
-  spec.add_development_dependency 'rake', '13.0.3'
-  spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.3'
-  spec.add_development_dependency 'scenic', '~> 1.5'
-  spec.add_development_dependency 'simplecov', '~> 0.16'
 end

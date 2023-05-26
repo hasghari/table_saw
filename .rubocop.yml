@@ -2,7 +2,7 @@ require: rubocop-rspec
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.0
   Exclude:
     - gemfiles/*
 
@@ -33,6 +33,9 @@ Style/EmptyMethod:
 
 Style/ExponentialNotation:
   Enabled: true
+
+Style/FetchEnvVar:
+  Enabled: false
 
 Style/FormatStringToken:
   EnforcedStyle: template

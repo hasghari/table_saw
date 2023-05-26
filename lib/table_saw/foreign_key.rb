@@ -3,7 +3,7 @@
 module TableSaw
   class ForeignKey
     class Column
-      REGEX = /(\w+)(?::(\w+)\((\w+)\))?/.freeze
+      REGEX = /(\w+)(?::(\w+)\((\w+)\))?/
 
       attr_reader :value
 
