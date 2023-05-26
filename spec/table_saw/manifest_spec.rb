@@ -62,6 +62,26 @@ RSpec.describe TableSaw::Manifest do
         expect(manifest.tables.values.map(&:query)).to eq([nil, 'select * from books where author_id = 134'])
       end
     end
+
+    context 'when the table query uses interpolated variables' do
+      let(:config) do
+        {
+          'variables' => {
+            'author_id' => '1,3,4',
+            'book_ids' => 'select * from books where author_id in (%{author_id})'
+          },
+          'tables' => [
+            { 'table' => 'authors' },
+            { 'table' => 'books', 'query' => 'select * from books where book_id in (%{book_ids})' }
+          ]
+        }
+      end
+
+      it 'returns the correct query' do
+        composed_query = 'select * from books where book_id in (select * from books where author_id in (1,3,4))'
+        expect(manifest.tables.values.map(&:query)).to eq([nil, composed_query])
+      end
+    end
   end
 
   describe '::instance' do

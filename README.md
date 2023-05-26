@@ -100,6 +100,14 @@ tables:
     query: "select * from books where author_id = %{author_id}"
 ```
 
+Additionally, you can now use the `%{variable}` substitution pattern in other variables:
+
+```yaml
+variables:
+  author_id: '1,3,4',
+  book_ids: 'select * from books where author_id in (%{author_id})' 
+```
+
 #### tables
 This is where you list the specific tables that you want to export. If you only specify the `table` without providing a 
 `query`, then the **entire** table will be exported. However, if you specify a `query`, then only rows matching that 
