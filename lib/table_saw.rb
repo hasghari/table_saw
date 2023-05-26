@@ -7,6 +7,7 @@ require 'table_saw/information_schema'
 require 'table_saw/manifest'
 require 'table_saw/queries'
 require 'table_saw/formats'
+require 'table_saw/variable_interpolation'
 
 module TableSaw
   def self.configuration

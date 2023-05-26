@@ -77,7 +77,7 @@ module TableSaw
 
     def variables
       vars = config.fetch('variables', {})
-      vars.merge(TableSaw.configuration.variables.slice(*vars.keys))
+      VariableInterpolation.call(vars.merge(TableSaw.configuration.variables.slice(*vars.keys)))
     end
 
     def tables
