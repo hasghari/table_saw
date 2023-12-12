@@ -30,4 +30,33 @@ module TableSaw
   def self.schema_cache
     TableSaw::Connection.adapter.schema_cache
   end
+
+  def self.primary_keys(manifest, table_name)
+    override_primary_key = look_for_primary_key(manifest, table_name)
+
+    if override_primary_key.present?
+      override_primary_key
+    else
+      schema_primary_keys = TableSaw.primary_keys(manifest, table_name)
+
+      raise ArgumentError, 'a primary_key: must be specified for foreign tables' unless schema_primary_keys.present?
+
+      schema_primary_keys
+    end
+  end
+
+  def self.look_for_primary_key(manifest, table_name)
+    suggested_primary_key = nil
+
+    manifest.tables.each_value do |table|
+      if table.name == table_name && table.primary_key.present?
+        suggested_primary_key = table.primary_key
+        next
+      end
+    end
+
+    suggested_primary_key
+  end
+
+  private_class_method :look_for_primary_key
 end

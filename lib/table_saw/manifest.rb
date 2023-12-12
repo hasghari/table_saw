@@ -54,6 +54,10 @@ module TableSaw
         format(config['query'], variables.transform_keys(&:to_sym))
       end
 
+      def primary_key
+        config['primary_key']
+      end
+
       def partial?
         config.key?('query')
       end

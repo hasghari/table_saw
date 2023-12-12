@@ -12,8 +12,10 @@ module TableSaw
 
       def call
         manifest.tables.values.sort_by { |t| t.partial? ? 1 : 0 }.each do |table|
-          add TableSaw::DependencyGraph::AddDirective.new(table.name, ids: select_ids(table), partial: table.partial?,
-                                                                      has_many: table.has_many)
+          add TableSaw::DependencyGraph::AddDirective.new(manifest, table.name,
+                                                          ids: select_ids(table),
+                                                          partial: table.partial?,
+                                                          has_many: table.has_many)
         end
 
         records
@@ -41,7 +43,15 @@ module TableSaw
       def select_ids(table)
         return [] unless table.partial?
 
-        TableSaw::Connection.exec(table.query).map { |row| row[TableSaw.schema_cache.primary_keys(table.name)] }
+        primary_key = TableSaw.primary_keys(manifest, table.name)
+
+        recordset = TableSaw::Connection.exec(table.query)
+        raise ArgumentError, "no results for query: #{table.query}" if recordset.count.zero?
+
+        ids = recordset.map { |row| row[primary_key] }
+        raise ArgumentError, "\"#{table.name}->#{primary_key}\" not found" if ids == [nil]
+
+        ids
       end
     end
   end
