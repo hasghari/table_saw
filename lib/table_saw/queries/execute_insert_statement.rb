@@ -22,13 +22,13 @@ module TableSaw
           .join(', ')
       end
 
-      def connection
-        TableSaw.schema_cache.connection
+      def adapter
+        TableSaw::Connection.adapter
       end
 
       def quote_value(column, value)
-        type = connection.lookup_cast_type_from_column(column)
-        connection.quote(type.serialize(type.deserialize(value)))
+        type = adapter.lookup_cast_type_from_column(column)
+        adapter.quote(type.serialize(type.deserialize(value)))
       end
     end
   end
