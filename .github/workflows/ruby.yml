@@ -16,6 +16,7 @@ jobs:
         activerecord:
           - '6.1.0'
           - '7.0.0'
+          - '7.1.0'
 
     env:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/activerecord_${{ matrix.activerecord }}.gemfile
