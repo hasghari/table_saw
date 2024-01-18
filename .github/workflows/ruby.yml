@@ -13,6 +13,7 @@ jobs:
           - '3.0.5'
           - '3.1.4'
           - '3.2.2'
+          - '3.3.0'
         activerecord:
           - '6.1.0'
           - '7.0.0'
@@ -34,7 +35,7 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1

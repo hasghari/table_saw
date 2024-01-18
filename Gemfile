@@ -7,7 +7,7 @@ gemspec
 
 gem 'appraisal'
 gem 'bundler', '~> 2.0'
-gem 'combustion', '~> 1.3'
+gem 'combustion', '~> 1.4'
 gem 'database_cleaner', '~> 2'
 gem 'pry'
 gem 'rake', '13.0.3'
