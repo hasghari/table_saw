@@ -4,12 +4,12 @@ require 'spec_helper'
 require 'table_saw/create_dump_file'
 
 RSpec.describe TableSaw::CreateDumpFile do
-  subject(:creator) { described_class.new(records, output: file, format: format) }
+  subject(:creator) { described_class.new(records, output: file, format:) }
 
   let(:records) do
     {
-      'authors' => TableSaw::DependencyGraph::DumpTable.new(manifest: manifest, name: 'authors', partial: false),
-      'books' => TableSaw::DependencyGraph::DumpTable.new(manifest: manifest, name: 'books', partial: false)
+      'authors' => TableSaw::DependencyGraph::DumpTable.new(manifest:, name: 'authors', partial: false),
+      'books' => TableSaw::DependencyGraph::DumpTable.new(manifest:, name: 'books', partial: false)
     }
   end
 

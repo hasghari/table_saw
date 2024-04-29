@@ -33,7 +33,7 @@ module TableSaw
         if record
           dir.partial? ? record.fetch_associations(dir) : []
         else
-          TableSaw::DependencyGraph::DumpTable.new(manifest: manifest, name: dir.table_name, partial: dir.partial?)
+          TableSaw::DependencyGraph::DumpTable.new(manifest:, name: dir.table_name, partial: dir.partial?)
             .tap { |table| records[dir.table_name] = table }.fetch_associations(dir)
         end
       end

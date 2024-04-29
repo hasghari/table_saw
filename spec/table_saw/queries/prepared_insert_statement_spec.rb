@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe TableSaw::Queries::PreparedInsertStatement do
-  subject(:query) { described_class.new(table_name, options: options) }
+  subject(:query) { described_class.new(table_name, options:) }
 
   let(:options) { {} }
 

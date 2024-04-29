@@ -22,7 +22,7 @@ module TableSaw
       private
 
       def prepared_statement
-        @prepared_statement ||= TableSaw::Queries::PreparedInsertStatement.new(table_name, options: options).call
+        @prepared_statement ||= TableSaw::Queries::PreparedInsertStatement.new(table_name, options:).call
       end
     end
   end

@@ -19,10 +19,10 @@ RSpec.describe TableSaw::Associations do
   end
 
   def foreign_key(from_table, from_column, to_table, to_column)
-    TableSaw::ForeignKey.new from_table: from_table,
-                             from_column: from_column,
-                             to_table: to_table,
-                             to_column: to_column
+    TableSaw::ForeignKey.new from_table:,
+                             from_column:,
+                             to_table:,
+                             to_column:
   end
 
   describe '#belongs_to' do

@@ -23,10 +23,10 @@ Gem::Specification.new do |spec|
   spec.executables   = ['table-saw']
   spec.require_paths = ['lib']
 
-  spec.required_ruby_version = '>= 3.0'
+  spec.required_ruby_version = '>= 3.1'
   spec.metadata['rubygems_mfa_required'] = 'true'
 
-  spec.add_dependency 'activerecord', '>= 6.0'
+  spec.add_dependency 'activerecord', '>= 6.1'
   spec.add_dependency 'pg'
   spec.add_dependency 'thor'
 end
