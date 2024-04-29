@@ -66,7 +66,7 @@ module TableSaw
     def self.instance
       raise ArgumentError, 'Could not find manifest file' unless File.exist?(TableSaw.configuration.manifest)
 
-      new(YAML.safe_load(File.read(TableSaw.configuration.manifest)))
+      new(YAML.safe_load_file(TableSaw.configuration.manifest))
     end
 
     attr_reader :config

@@ -15,7 +15,7 @@ module TableSaw
       def copy_statement
         if partial
           format 'select * from %{name} where %{clause}',
-                 name: name, clause: TableSaw::Queries::SerializeSqlInClause.new(name, primary_key, ids.to_a).call
+                 name:, clause: TableSaw::Queries::SerializeSqlInClause.new(name, primary_key, ids.to_a).call
 
         else
           "select * from #{name}"
