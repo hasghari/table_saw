@@ -3,10 +3,11 @@
 module TableSaw
   module DependencyGraph
     class AddDirective
-      attr_reader :table_name, :partial, :has_many
+      attr_reader :manifest, :table_name, :partial, :has_many
       attr_accessor :ids
 
-      def initialize(table_name, ids: [], partial: true, has_many: {})
+      def initialize(manifest, table_name, ids: [], partial: true, has_many: {})
+        @manifest = manifest
         @table_name = table_name
         @ids = ids
         @partial = partial
@@ -24,7 +25,7 @@ module TableSaw
       end
 
       def primary_key
-        TableSaw.schema_cache.primary_keys(table_name)
+        TableSaw.primary_keys(manifest, table_name)
       end
     end
   end

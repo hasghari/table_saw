@@ -14,7 +14,7 @@ module TableSaw
         valid_associations.map do |fk|
           TableSaw::DependencyGraph::AddDirective.new(
             fk.from_table,
-            ids: query_result(fk).map { |r| r[TableSaw.schema_cache.primary_keys(fk.from_table)] },
+            ids: query_result(fk).map { |r| r[TableSaw.primary_keys(manifest, fk.from_table)] },
             partial: directive.partial?
           )
         end
