@@ -20,7 +20,7 @@ module TableSaw
       def quoted_columns
         TableSaw.schema_cache.columns_hash(table_name)
           .each_key
-          .map { |name| TableSaw::Connection.adapter.quote_column_name(name) }
+          .map { |name| TableSaw.connection.quote_column_name(name) }
           .join(', ')
       end
     end

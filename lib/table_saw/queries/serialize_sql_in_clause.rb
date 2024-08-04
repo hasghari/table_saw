@@ -23,12 +23,8 @@ module TableSaw
 
       def serialized_values
         values.map do |value|
-          connection.quote_default_expression(value, db_column)
+          TableSaw.connection.quote_default_expression(value, db_column)
         end
-      end
-
-      def connection
-        TableSaw::Connection.adapter
       end
     end
   end

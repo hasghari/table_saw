@@ -36,7 +36,7 @@ module TableSaw
       private
 
       def result
-        @result ||= TableSaw::Connection.exec(QUERY)
+        @result ||= TableSaw.connection.exec_query(QUERY)
       end
     end
   end

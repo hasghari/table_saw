@@ -32,7 +32,7 @@ module TableSaw
 
       def column_names
         TableSaw.schema_cache.columns(table_name)
-          .map { |column| TableSaw::Connection.adapter.quote_column_name(column.name) }
+          .map { |column| TableSaw.connection.quote_column_name(column.name) }
           .join(', ')
       end
 

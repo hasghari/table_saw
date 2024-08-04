@@ -51,9 +51,9 @@ module TableSaw
 
         Array(formatter.header).each { |line| write_to_file(line) }
 
-        TableSaw::Connection.with do |conn|
-          conn.copy_data "COPY (#{table.copy_statement}) TO STDOUT", formatter.coder do
-            while (row = conn.get_copy_data)
+        TableSaw.connection_pool.with_connection do |conn|
+          conn.raw_connection.copy_data "COPY (#{table.copy_statement}) TO STDOUT", formatter.coder do
+            while (row = conn.raw_connection.get_copy_data)
               write_to_file formatter.dump_row(row)
             end
           end

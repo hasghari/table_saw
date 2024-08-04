@@ -9,20 +9,10 @@ require 'combustion'
 Combustion.initialize! :active_record
 
 require 'bundler/setup'
-require 'database_cleaner'
+require 'database_cleaner/active_record'
 require 'table_saw'
 
 require 'pry'
-
-db_config = if ActiveRecord.gem_version < Gem::Version.create('6.1.0')
-              ActiveRecord::Base.connection_config
-            else
-              ActiveRecord::Base.connection_pool.db_config.configuration_hash
-            end
-
-TableSaw.configure(
-  host: db_config[:host], dbname: db_config[:database], user: db_config[:username], password: db_config[:password]
-)
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

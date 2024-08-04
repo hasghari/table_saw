@@ -40,7 +40,7 @@ module TableSaw
       def query_result(foreign_key)
         return [] unless directive.selectable?
 
-        TableSaw::Connection.exec(
+        TableSaw.connection.exec_query(
           TableSaw::DependencyGraph::BuildHasManyQuery.new(manifest, directive, foreign_key).call
         )
       end
