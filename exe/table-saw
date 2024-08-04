@@ -29,6 +29,7 @@ class CLI < Thor
                             desc: 'This option takes a hash to override variables provided in the manifest'
   def dump
     TableSaw.configure(options.to_hash)
+    ::ActiveRecord::Base.establish_connection(TableSaw.configuration.connection)
     records = TableSaw::DependencyGraph::Build.new(TableSaw::Manifest.instance).call
     TableSaw::CreateDumpFile.new(records, output: options[:output], format: options[:format]).call
   end

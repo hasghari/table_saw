@@ -37,7 +37,7 @@ module TableSaw
       def query_result(foreign_key)
         return [] unless directive.selectable?
 
-        TableSaw::Connection.exec(
+        TableSaw.connection.exec_query(
           format(QUERY, column: foreign_key.column.primary_key, table_name: directive.table_name,
                         clause: TableSaw::Queries::SerializeSqlInClause.new(directive.table_name,
                                                                             directive.primary_key,

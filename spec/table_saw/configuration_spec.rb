@@ -3,6 +3,17 @@
 RSpec.describe TableSaw::Configuration do
   subject(:config) { described_class.new }
 
+  describe '#connection' do
+    before do
+      config.url = 'postgres://postgres:postgres@localhost:5432/table_saw_test'
+    end
+
+    it 'is a hash' do
+      expect(config.connection).to eq adapter: 'postgresql', database: 'table_saw_test', host: 'localhost',
+                                      username: 'postgres', password: 'postgres', port: 5432
+    end
+  end
+
   describe '#url=' do
     before do
       config.url = 'postgres://hamed:asghari@compute.aws.com:5432/meerkat'

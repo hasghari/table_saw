@@ -6,7 +6,7 @@ module TableSaw
     attr_accessor :dbname, :host, :port, :user, :password, :manifest, :output, :format
 
     def connection
-      { dbname:, host:, port:, user:, password: }
+      { adapter: 'postgresql', database: dbname, host:, port:, username: user, password: }
     end
 
     def url=(value)

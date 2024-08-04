@@ -6,7 +6,7 @@ module TableSaw
       QUERY = 'select matviewname from pg_matviews order by matviewname'
 
       def call
-        TableSaw::Connection.exec(QUERY).map { |row| row['matviewname'] }
+        TableSaw.connection.exec_query(QUERY).map { |row| row['matviewname'] }
       end
     end
   end
