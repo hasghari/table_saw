@@ -40,7 +40,7 @@ module TableSaw
 
   # :nocov:
   def self.connection
-    if ActiveRecord.gem_version < Gem::Version.new('7.2.0.beta3')
+    if ActiveRecord.gem_version < Gem::Version.new('7.2.0.rc1')
       connection_pool.connection
     else
       connection_pool.lease_connection
