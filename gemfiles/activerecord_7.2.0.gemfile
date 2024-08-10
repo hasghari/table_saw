@@ -12,6 +12,6 @@ gem "rspec", "~> 3.0"
 gem "rubocop-rspec", "~> 2.3"
 gem "scenic", "~> 1.5"
 gem "simplecov", "~> 0.16"
-gem "activerecord", "~> 7.2.0.rc1", "< 7.3"
+gem "activerecord", "~> 7.2.0", "< 7.3"
 
 gemspec path: "../"
