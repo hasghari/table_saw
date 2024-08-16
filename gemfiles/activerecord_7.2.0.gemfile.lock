@@ -2,7 +2,7 @@ PATH
   remote: ..
   specs:
     table_saw (3.2.0)
-      activerecord (>= 6.1)
+      activerecord (>= 7.0)
       pg
       thor
 
@@ -80,7 +80,7 @@ GEM
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
     method_source (1.1.0)
-    minitest (5.24.1)
+    minitest (5.25.0)
     nokogiri (1.16.7-aarch64-linux)
       racc (~> 1.4)
     nokogiri (1.16.7-arm-linux)
@@ -93,7 +93,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
-    parallel (1.26.1)
+    parallel (1.26.2)
     parser (3.3.4.2)
       ast (~> 2.4.1)
       racc
@@ -134,7 +134,7 @@ GEM
     regexp_parser (2.9.2)
     reline (0.5.9)
       io-console (~> 0.5)
-    rexml (3.3.4)
+    rexml (3.3.5)
       strscan
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
