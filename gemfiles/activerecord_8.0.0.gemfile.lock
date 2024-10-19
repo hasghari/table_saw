@@ -9,9 +9,9 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    actionpack (8.0.0.beta1)
-      actionview (= 8.0.0.beta1)
-      activesupport (= 8.0.0.beta1)
+    actionpack (8.0.0.rc1)
+      actionview (= 8.0.0.rc1)
+      activesupport (= 8.0.0.rc1)
       nokogiri (>= 1.8.5)
       rack (>= 2.2.4)
       rack-session (>= 1.0.1)
@@ -19,19 +19,19 @@ GEM
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
       useragent (~> 0.16)
-    actionview (8.0.0.beta1)
-      activesupport (= 8.0.0.beta1)
+    actionview (8.0.0.rc1)
+      activesupport (= 8.0.0.rc1)
       builder (~> 3.1)
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
-    activemodel (8.0.0.beta1)
-      activesupport (= 8.0.0.beta1)
-    activerecord (8.0.0.beta1)
-      activemodel (= 8.0.0.beta1)
-      activesupport (= 8.0.0.beta1)
+    activemodel (8.0.0.rc1)
+      activesupport (= 8.0.0.rc1)
+    activerecord (8.0.0.rc1)
+      activemodel (= 8.0.0.rc1)
+      activesupport (= 8.0.0.rc1)
       timeout (>= 0.4.0)
-    activesupport (8.0.0.beta1)
+    activesupport (8.0.0.rc1)
       base64
       benchmark (>= 0.3)
       bigdecimal
@@ -114,9 +114,9 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
-    railties (8.0.0.beta1)
-      actionpack (= 8.0.0.beta1)
-      activesupport (= 8.0.0.beta1)
+    railties (8.0.0.rc1)
+      actionpack (= 8.0.0.rc1)
+      activesupport (= 8.0.0.rc1)
       irb (~> 1.13)
       rackup (>= 1.0.0)
       rake (>= 12.2)
@@ -191,7 +191,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord (= 8.0.0.beta1, < 9)
+  activerecord (= 8.0.0.rc1, < 9)
   appraisal
   bundler (~> 2.0)
   combustion (~> 1.4)
