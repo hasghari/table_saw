@@ -13,6 +13,6 @@ gem "rubocop-rspec", "~> 2.3"
 gem "scenic", "~> 1.5"
 gem "simplecov", "~> 0.16"
 gem "ostruct"
-gem "activerecord", "8.0.0.beta1", "< 9"
+gem "activerecord", "8.0.0.rc1", "< 9"
 
 gemspec path: "../"
