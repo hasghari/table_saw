@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'table_saw/foreign_key'
-require 'set'
 
 module TableSaw
   module Queries
