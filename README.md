@@ -1,6 +1,4 @@
 ![](https://github.com/hasghari/table_saw/workflows/Ruby/badge.svg)
-[![Maintainability](https://api.codeclimate.com/v1/badges/abd5b5451c764d3249f1/maintainability)](https://codeclimate.com/github/hasghari/table_saw/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/abd5b5451c764d3249f1/test_coverage)](https://codeclimate.com/github/hasghari/table_saw/test_coverage)
 
 # table-saw
 

@@ -46,9 +46,5 @@ jobs:
           sudo apt-get -yqq install libpq-dev
 
       - name: Run tests with RSpec
-        uses: paambaati/codeclimate-action@v2.7.5
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: bundle exec rspec
-          debug: false
+        run: |
+          bundle exec rspec
