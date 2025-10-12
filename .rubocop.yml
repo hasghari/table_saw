@@ -21,7 +21,7 @@ Lint/RaiseException:
 Lint/StructNewOverride:
   Enabled: true
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
   AllowedMethods:
     - has_many
 
