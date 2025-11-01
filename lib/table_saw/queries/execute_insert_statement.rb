@@ -23,7 +23,11 @@ module TableSaw
       end
 
       def quote_value(column, value)
-        type = TableSaw.connection.lookup_cast_type_from_column(column)
+        type = if ActiveRecord.version >= Gem::Version.create('8.1.0')
+                 column.fetch_cast_type(TableSaw.connection)
+               else
+                 TableSaw.connection.lookup_cast_type_from_column(column)
+               end
         TableSaw.connection.quote(type.serialize(type.deserialize(value)))
       end
     end
