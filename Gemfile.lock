@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    table_saw (3.3.0)
+    table_saw (3.3.1)
       activerecord (>= 7.1)
       pg
       thor
@@ -213,4 +213,4 @@ DEPENDENCIES
   zeitwerk (~> 2.6.0)
 
 BUNDLED WITH
-  2.7.2
+   2.7.2
