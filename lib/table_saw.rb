@@ -3,6 +3,7 @@
 require 'active_record'
 require 'active_support/core_ext/string'
 
+require 'table_saw/application_record'
 require 'table_saw/configuration'
 require 'table_saw/dependency_graph'
 require 'table_saw/information_schema'
@@ -31,20 +32,6 @@ module TableSaw
   end
 
   def self.schema_cache
-    connection.schema_cache
+    ApplicationRecord.connection.schema_cache
   end
-
-  def self.connection_pool
-    ActiveRecord::Base.connection_pool
-  end
-
-  # :nocov:
-  def self.connection
-    if ActiveRecord.gem_version < Gem::Version.new('7.2.0')
-      connection_pool.connection
-    else
-      connection_pool.lease_connection
-    end
-  end
-  # :nocov:
 end

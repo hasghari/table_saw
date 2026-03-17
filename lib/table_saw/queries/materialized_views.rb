@@ -3,10 +3,20 @@
 module TableSaw
   module Queries
     class MaterializedViews
-      QUERY = 'select matviewname from pg_matviews order by matviewname'
+      QUERY = <<~SQL
+        select matviewname from pg_matviews
+        where schemaname IN (:schemas)
+        order by matviewname
+      SQL
 
       def call
-        TableSaw.connection.exec_query(QUERY).map { |row| row['matviewname'] }
+        ApplicationRecord.connection.exec_query(query).map { |row| row['matviewname'] }
+      end
+
+      private
+
+      def query
+        ApplicationRecord.sanitize_sql_array([QUERY, schemas: TableSaw.configuration.schemas])
       end
     end
   end

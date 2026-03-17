@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 require 'uri'
 
 module TableSaw
   class Configuration
-    attr_writer :variables
+    attr_writer :variables, :schemas
     attr_accessor :dbname, :host, :port, :user, :password, :manifest, :output, :format
 
     def connection
@@ -22,6 +23,10 @@ module TableSaw
 
     def variables
       @variables || {}
+    end
+
+    def schemas
+      @schemas || ['public']
     end
   end
 end
