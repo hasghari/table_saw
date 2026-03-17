@@ -16,6 +16,7 @@ module TableSaw
           join information_schema.key_column_usage kcu on tc.constraint_name = kcu.constraint_name
           join information_schema.constraint_column_usage ccu on tc.constraint_name = ccu.constraint_name
         where tc.constraint_type = 'FOREIGN KEY'
+          and tc.table_schema IN (:schemas)
       SQL
 
       def constraint_names
@@ -35,7 +36,11 @@ module TableSaw
       private
 
       def result
-        @result ||= TableSaw.connection.exec_query(QUERY)
+        @result ||= ApplicationRecord.connection.exec_query(query)
+      end
+
+      def query
+        ApplicationRecord.sanitize_sql_array([QUERY, schemas: TableSaw.configuration.schemas])
       end
     end
   end

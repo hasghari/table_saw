@@ -49,4 +49,15 @@ RSpec.describe TableSaw::Configuration do
       expect(config.variables).to be_a Hash
     end
   end
+
+  describe '#schemas' do
+    it 'defaults to public' do
+      expect(config.schemas).to eq ['public']
+    end
+
+    it 'can be overridden' do
+      config.schemas = %w(public reporting)
+      expect(config.schemas).to eq %w(public reporting)
+    end
+  end
 end

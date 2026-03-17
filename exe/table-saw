@@ -27,9 +27,11 @@ class CLI < Thor
   method_option :format, type: :hash, default: { 'type' => 'copy' }
   method_option :variables, aliases: '-v', type: :hash, default: {},
                             desc: 'This option takes a hash to override variables provided in the manifest'
+  method_option :schemas, type: :array, default: ['public'],
+                          desc: 'Schema(s) to include when querying information_schema (default: public)'
   def dump
     TableSaw.configure(options.to_hash)
-    ::ActiveRecord::Base.establish_connection(TableSaw.configuration.connection)
+    TableSaw::ApplicationRecord.establish_connection(TableSaw.configuration.connection)
     records = TableSaw::DependencyGraph::Build.new(TableSaw::Manifest.instance).call
     TableSaw::CreateDumpFile.new(records, output: options[:output], format: options[:format]).call
   end
