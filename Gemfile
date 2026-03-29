@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'appraisal'
-gem 'bundler', '~> 2.0'
+gem 'bundler'
 gem 'combustion', '~> 1.4'
 gem 'database_cleaner-active_record', '~> 2.2'
 gem 'ostruct'
