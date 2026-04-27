@@ -27,7 +27,7 @@ module TableSaw
       private
 
       def query
-        ApplicationRecord.sanitize_sql_array([QUERY, schemas: TableSaw.configuration.schemas])
+        ApplicationRecord.sanitize_sql_array([QUERY, { schemas: TableSaw.configuration.schemas }])
       end
     end
   end
