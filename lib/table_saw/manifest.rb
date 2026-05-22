@@ -81,8 +81,8 @@ module TableSaw
     end
 
     def tables
-      @tables ||= config['tables'].map { |entry| Table.new(variables, entry) }.each_with_object({}) do |t, memo|
-        memo[t.name] = t
+      @tables ||= config['tables'].map { |entry| Table.new(variables, entry) }.to_h do |t|
+        [t.name, t]
       end
     end
 

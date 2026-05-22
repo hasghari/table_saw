@@ -28,8 +28,8 @@ module TableSaw
       end
 
       def ids
-        @ids ||= associations.each_with_object({}) do |fk, memo|
-          memo[fk.column.primary_key] = query_result(fk).map { |row| row[fk.column.primary_key] }
+        @ids ||= associations.to_h do |fk|
+          [fk.column.primary_key, query_result(fk).map { |row| row[fk.column.primary_key] }]
         end
       end
 
