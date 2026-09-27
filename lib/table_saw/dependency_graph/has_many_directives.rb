@@ -26,7 +26,7 @@ module TableSaw
         manifest.associations.has_many.fetch(directive.table_name, Set.new)
       end
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable-next Metrics/AbcSize
       def valid_associations
         associations.select do |fk|
           next false if directive.partial? && TableSaw.schema_cache.primary_keys(fk.from_table).nil?
@@ -35,7 +35,6 @@ module TableSaw
           manifest.has_many.fetch(directive.table_name, {}).key?(fk.from_table)
         end
       end
-      # rubocop:enable Metrics/AbcSize
 
       def query_result(foreign_key)
         return [] unless directive.selectable?

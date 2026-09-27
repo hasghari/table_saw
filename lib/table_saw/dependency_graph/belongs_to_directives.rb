@@ -33,7 +33,7 @@ module TableSaw
         end
       end
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable-next Metrics/AbcSize
       def query_result(foreign_key)
         return [] unless directive.selectable?
 
@@ -45,7 +45,6 @@ module TableSaw
                         polymorphic: foreign_key.type_condition)
         )
       end
-      # rubocop:enable Metrics/AbcSize
     end
   end
 end
