@@ -17,7 +17,7 @@ module TableSaw
       @format = format
     end
 
-    # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
+    # rubocop:disable-next Metrics/MethodLength,Metrics/AbcSize
     def call
       FileUtils.rm_f(file)
       FileUtils.mkdir_p(File.dirname(file))
@@ -70,7 +70,6 @@ module TableSaw
 
       alter_constraints_deferrability keyword: 'NOT DEFERRABLE'
     end
-    # rubocop:enable Metrics/MethodLength,Metrics/AbcSize
 
     private
 

@@ -23,7 +23,7 @@ module TableSaw
 
       private
 
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable-next Metrics/AbcSize
       def build_base_query
         format(QUERY, primary_key: TableSaw.schema_cache.primary_keys(foreign_key.from_table),
                       table: foreign_key.from_table,
@@ -32,7 +32,6 @@ module TableSaw
                                                                           directive.ids).call,
                       polymorphic: foreign_key.type_condition)
       end
-      # rubocop:enable Metrics/AbcSize
 
       def append_scope(query)
         return query unless has_many&.scope
